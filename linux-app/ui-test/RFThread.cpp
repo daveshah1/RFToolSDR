@@ -391,10 +391,14 @@ void RFThread::thread_main() {
       endSettingChange();
     }
     // do Rx
-    // get up to 256k samples per iteration
+    // get up to 256k samples per iteration; but don't spend more than 20ms
+    // doing so
+    auto rxstart = chrono::steady_clock::now();
     temp_buf_ptr = temp_buf;
     for (int i = 0; i < 250; i++) {
       temp_buf_ptr += rx_get_data(temp_buf_ptr);
+      if ((chrono::steady_clock::now() - rxstart) > chrono::milliseconds(20))
+        break;
     }
     {
       lock_guard<mutex> guard(sample_buf_mutex);
