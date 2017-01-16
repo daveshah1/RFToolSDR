@@ -10,7 +10,7 @@ RFTool is a standalone AD9361 based SDR with a USB 3 interface and a number of o
  - Flexible external reference input (switchable termination and coupling)
  - USB powered, no external power needed
 
-Rev 1.0 of the hardware has been built and initial tests completed. FPGA and PC code is still
-a work in progress and will be released once more complete.
+Rev 1.0 of the hardware has been built and initial tests completed. Receive-only
+FPGA code and a simple Spectrum Analyser application for Linux has also been built.
 
 ![Rev 1.0 Hardware](http://ds0.me/sdr/hardware_tiny.jpg)

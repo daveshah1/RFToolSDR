@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="/home/dave/misc-projects/rftool-fpga/projects/rx_only/rx_only.hw/hw_1/wave/hw_ila_data_1/hw_ila_data_1.wdb" id="1">
+         <top_modules>
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <zoom_setting>
+      <ZoomStartTime time="16357785fs"></ZoomStartTime>
+      <ZoomEndTime time="16384136fs"></ZoomEndTime>
+      <Cursor1Time time="3741000fs"></Cursor1Time>
+   </zoom_setting>
+   <column_width_setting>
+      <NameColumnWidth column_width="170"></NameColumnWidth>
+      <ValueColumnWidth column_width="236"></ValueColumnWidth>
+   </column_width_setting>
+   <WVObjectSize size="2" />
+   <wave_markers>
+   </wave_markers>
+   <wvobject type="array" fp_name="iq_fifo_d_0">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">iq_fifo_d_0[11:0]</obj_property>
+      <obj_property name="ObjectShortName">iq_fifo_d_0[11:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+   </wvobject>
+   <wvobject type="array" fp_name="iq_fifo_d_12">
+      <obj_property name="DisplayName">FullPathName</obj_property>
+      <obj_property name="ElementShortName">iq_fifo_d_12[11:0]</obj_property>
+      <obj_property name="ObjectShortName">iq_fifo_d_12[11:0]</obj_property>
+      <obj_property name="Radix">SIGNEDDECRADIX</obj_property>
+      <obj_property name="isExpanded"></obj_property>
+      <obj_property name="LABELRADIX">true</obj_property>
+   </wvobject>
+</wave_config>
