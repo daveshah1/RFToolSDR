@@ -24,6 +24,7 @@ extern "C" {
 
 #include <sstream>
 
+#include <algorithm>
 #include <thread>
 
 using namespace std;
@@ -41,8 +42,9 @@ Glib::RefPtr<Gtk::Adjustment> dispMaxAmp, dispMinAmp, rxDispZoom, rxOffset,
     rxCenterFreq, rxInputGain;
 Gtk::ComboBox *fftLengthSel, *rxBwSel, *rxInputSel;
 Gtk::CheckButton *rxAgcEnable;
-Gtk::DrawingArea *fft_area = 0;
+Gtk::DrawingArea *fft_area, *waterfallArea;
 Gtk::SpinButton *rxCenterFreqSpinner;
+Gtk::Button *autoscaleAmp;
 Gtk::Scale *rxGainSet;
 Gtk::Label *rxResolution, *cursorFreq;
 ulong last_fftLength = -1;
@@ -52,6 +54,12 @@ const size_t max_fftLength = 16777216;
 _Complex double *x_buf, *y_buf;
 atomic<bool> draw_done{false};
 atomic<ulong> fftLength{524288};
+
+// Waterfall display points
+const int waterfall_wmax = 3840, waterfall_hmax = 2160;
+float waterfall_points[waterfall_hmax][waterfall_wmax] = {{0.0}};
+int waterfall_yptr = 0;
+
 void update_fft() {
   while (true) {
 
@@ -131,6 +139,13 @@ void rxBandwidthChanged() {
 
 void rxAgcChanged() { rft->setAgcEnable(rxAgcEnable->get_active()); }
 
+void autoscale_vert() {
+  double minamp = *min_element(fft_points.begin(), fft_points.end());
+  double maxamp = *max_element(fft_points.begin(), fft_points.end());
+  dispMinAmp->set_value(floor(minamp - 1));
+  dispMaxAmp->set_value(ceil(maxamp + 20));
+}
+
 bool on_fft_draw(const Cairo::RefPtr<Cairo::Context> &cr) {
   {
     lock_guard<mutex> fft_lock_acquire(fft_lock);
@@ -151,10 +166,56 @@ bool on_fft_draw(const Cairo::RefPtr<Cairo::Context> &cr) {
     fftLengthSel->get_active()->get_value(1, fftLengthT);
     fftLength = fftLengthT;
     fftr->FitFFTToView(2048, 0, y_buf, fftLength, fft_points);
+    for (int i = 0; i < fft_points.size(); i++) {
+      if (i < waterfall_wmax) {
+        waterfall_points[waterfall_yptr][i] =
+            (fft_points[i] - fftr->minAmplitude) /
+            (fftr->maxAmplitude - fftr->minAmplitude);
+      }
+    }
+    waterfall_yptr++;
+    if (waterfall_yptr >= waterfall_hmax)
+      waterfall_yptr = 0;
     fftr->RenderToContext(fft_points, cr);
   }
+  waterfallArea->queue_draw();
   draw_done = true;
 
+  return true;
+}
+
+bool on_wf_draw(const Cairo::RefPtr<Cairo::Context> &cr) {
+  Gtk::Allocation allocation = waterfallArea->get_allocation();
+  int width = allocation.get_width();
+  int height = allocation.get_height();
+
+  uint32_t *argb_bitmap = new uint32_t[height * width];
+  for (int y = 0; y < height; y++) {
+    for (int x = 0; x < width; x++) {
+      if (x >= waterfall_wmax)
+        break;
+      int waterfall_y =
+          ((waterfall_yptr - y) + waterfall_hmax) % waterfall_hmax;
+      float fval = waterfall_points[waterfall_y][x];
+      uint8_t pixval;
+      if (fval >= 1)
+        pixval = 255;
+      else if (fval <= 0)
+        pixval = 0;
+      else
+        pixval = uint8_t(fval * 255);
+      argb_bitmap[y * width + x] = 0xff000000 | (uint16_t(pixval) << 8);
+    }
+    if (y >= waterfall_hmax)
+      break;
+  }
+  Cairo::RefPtr<Cairo::ImageSurface> tmpSurface = Cairo::ImageSurface::create(
+      reinterpret_cast<unsigned char *>(argb_bitmap),
+      Cairo::Format::FORMAT_ARGB32, width, height, width * 4);
+  cr->set_source(tmpSurface, 0, 0);
+  cr->paint();
+  tmpSurface->finish();
+  delete[] argb_bitmap;
   return true;
 }
 
@@ -176,6 +237,7 @@ int main(int argc, char *argv[]) {
   Gtk::Window *main_win = 0;
   builder->get_widget("main_window", main_win);
   builder->get_widget("fftArea", fft_area);
+  builder->get_widget("waterfallArea", waterfallArea);
 
   dispMaxAmp = Glib::RefPtr<Gtk::Adjustment>::cast_dynamic(
       builder->get_object("dispMaxAmp"));
@@ -198,11 +260,13 @@ int main(int argc, char *argv[]) {
   builder->get_widget("rxGainSet", rxGainSet);
   builder->get_widget("rxResolution", rxResolution);
   builder->get_widget("cursorFreq", cursorFreq);
+  builder->get_widget("autoscaleAmp", autoscaleAmp);
 
   if (main_win) {
     rft = new RFThread();
 
     fft_area->signal_draw().connect(sigc::ptr_fun(on_fft_draw));
+    waterfallArea->signal_draw().connect(sigc::ptr_fun(on_wf_draw));
     main_win->set_events(Gdk::BUTTON_PRESS_MASK | Gdk::POINTER_MOTION_MASK);
     fft_area->set_events(Gdk::BUTTON_PRESS_MASK | Gdk::POINTER_MOTION_MASK);
     fft_area->signal_button_press_event().connect(
@@ -216,7 +280,7 @@ int main(int argc, char *argv[]) {
     rxInputSel->signal_changed().connect(sigc::ptr_fun(inputSelChanged));
     rxBwSel->signal_changed().connect(sigc::ptr_fun(rxBandwidthChanged));
     rxAgcEnable->signal_toggled().connect(sigc::ptr_fun(rxAgcChanged));
-
+    autoscaleAmp->signal_clicked().connect(sigc::ptr_fun(autoscale_vert));
     rft->start();
     Glib::signal_timeout().connect(sigc::ptr_fun(redraw_fft), 17);
     thread uth(update_fft);
