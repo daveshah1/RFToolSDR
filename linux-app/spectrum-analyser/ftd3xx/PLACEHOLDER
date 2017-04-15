@@ -1,0 +1,3 @@
+Download the D3XX Linux driver from http://www.ftdichip.com/Drivers/D3XX.htm and extract
+the contents of the linux-x86_64 folder in the d3xx-linux-x86_64-x.y.z.tar.bz2 file from
+the first zip file into this folder.
