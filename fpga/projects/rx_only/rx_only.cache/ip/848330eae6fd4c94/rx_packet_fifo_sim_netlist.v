@@ -3,8 +3,8 @@
 // Tool Version: Vivado v.2016.3 (lin64) Build 1682563 Mon Oct 10 19:07:26 MDT 2016
 // Date        : Sat Apr 15 09:39:28 2017
 // Host        : david-desktop-arch running 64-bit unknown
-// Command     : write_verilog -force -mode funcsim
-//               /home/dave/misc-projects/rftool-fpga/projects/rx_only/rx_only.srcs/sources_1/ip/rx_packet_fifo/rx_packet_fifo_sim_netlist.v
+// Command     : write_verilog -force -mode funcsim -rename_top decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix -prefix
+//               decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_ rx_packet_fifo_sim_netlist.v
 // Design      : rx_packet_fifo
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -14,7 +14,7 @@
 
 (* CHECK_LICENSE_TYPE = "rx_packet_fifo,fifo_generator_v13_1_2,{}" *) (* downgradeipidentifiedwarnings = "yes" *) (* x_core_info = "fifo_generator_v13_1_2,Vivado 2016.3" *) 
 (* NotValidForBitStream *)
-module rx_packet_fifo
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix
    (wr_clk,
     rd_clk,
     din,
@@ -368,7 +368,7 @@ module rx_packet_fifo
   (* C_WR_PNTR_WIDTH_WDCH = "10" *) 
   (* C_WR_PNTR_WIDTH_WRCH = "4" *) 
   (* C_WR_RESPONSE_LATENCY = "1" *) 
-  rx_packet_fifo_fifo_generator_v13_1_2 U0
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_fifo_generator_v13_1_2 U0
        (.almost_empty(NLW_U0_almost_empty_UNCONNECTED),
         .almost_full(NLW_U0_almost_full_UNCONNECTED),
         .axi_ar_data_count(NLW_U0_axi_ar_data_count_UNCONNECTED[4:0]),
@@ -602,8 +602,7 @@ module rx_packet_fifo
         .wr_rst_busy(NLW_U0_wr_rst_busy_UNCONNECTED));
 endmodule
 
-(* ORIG_REF_NAME = "bindec" *) 
-module rx_packet_fifo_bindec
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_bindec
    (ena_array,
     out,
     wr_en,
@@ -645,7 +644,7 @@ module rx_packet_fifo_bindec
 endmodule
 
 (* ORIG_REF_NAME = "bindec" *) 
-module rx_packet_fifo_bindec_0
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_bindec_0
    (enb_array,
     ram_empty_fb_i_reg,
     rd_en,
@@ -686,8 +685,7 @@ module rx_packet_fifo_bindec_0
         .O(enb_array[2]));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_generic_cstr" *) 
-module rx_packet_fifo_blk_mem_gen_generic_cstr
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_generic_cstr
    (dout,
     wr_clk,
     rd_clk,
@@ -847,17 +845,17 @@ module rx_packet_fifo_blk_mem_gen_generic_cstr
   wire wr_clk;
   wire wr_en;
 
-  rx_packet_fifo_bindec \bindec_a.bindec_inst_a 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_bindec \bindec_a.bindec_inst_a 
        (.Q(Q[13:12]),
         .ena_array(ena_array),
         .out(out),
         .wr_en(wr_en));
-  rx_packet_fifo_bindec_0 \bindec_b.bindec_inst_b 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_bindec_0 \bindec_b.bindec_inst_b 
        (.enb_array(enb_array),
         .\gc0.count_d1_reg[13] (\gc0.count_d1_reg[13] [13:12]),
         .ram_empty_fb_i_reg(ram_empty_fb_i_reg),
         .rd_en(rd_en));
-  rx_packet_fifo_blk_mem_gen_mux__parameterized0 \has_mux_b.B 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_mux__parameterized0 \has_mux_b.B 
        (.\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram ({\ramloop[4].ram.r_n_0 ,\ramloop[4].ram.r_n_1 ,\ramloop[4].ram.r_n_2 ,\ramloop[4].ram.r_n_3 ,\ramloop[4].ram.r_n_4 ,\ramloop[4].ram.r_n_5 ,\ramloop[4].ram.r_n_6 ,\ramloop[4].ram.r_n_7 }),
         .\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_0 ({\ramloop[5].ram.r_n_0 ,\ramloop[5].ram.r_n_1 ,\ramloop[5].ram.r_n_2 ,\ramloop[5].ram.r_n_3 ,\ramloop[5].ram.r_n_4 ,\ramloop[5].ram.r_n_5 ,\ramloop[5].ram.r_n_6 ,\ramloop[5].ram.r_n_7 }),
         .\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_1 ({\ramloop[3].ram.r_n_0 ,\ramloop[3].ram.r_n_1 ,\ramloop[3].ram.r_n_2 ,\ramloop[3].ram.r_n_3 ,\ramloop[3].ram.r_n_4 ,\ramloop[3].ram.r_n_5 ,\ramloop[3].ram.r_n_6 ,\ramloop[3].ram.r_n_7 }),
@@ -899,7 +897,7 @@ module rx_packet_fifo_blk_mem_gen_generic_cstr
        (.I0(rd_en),
         .I1(ram_empty_fb_i_reg),
         .O(ram_enb_n_0));
-  rx_packet_fifo_blk_mem_gen_prim_width \ramloop[0].ram.r 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width \ramloop[0].ram.r 
        (.Q(Q),
         .din(din[0]),
         .dout(dout[0]),
@@ -909,7 +907,7 @@ module rx_packet_fifo_blk_mem_gen_generic_cstr
         .ram_full_fb_i_reg_0(ram_full_fb_i_reg),
         .rd_clk(rd_clk),
         .wr_clk(wr_clk));
-  rx_packet_fifo_blk_mem_gen_prim_width__parameterized9 \ramloop[10].ram.r 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized9 \ramloop[10].ram.r 
        (.Q(Q[11:0]),
         .din(din[22:14]),
         .\dout[21] ({\ramloop[10].ram.r_n_0 ,\ramloop[10].ram.r_n_1 ,\ramloop[10].ram.r_n_2 ,\ramloop[10].ram.r_n_3 ,\ramloop[10].ram.r_n_4 ,\ramloop[10].ram.r_n_5 ,\ramloop[10].ram.r_n_6 ,\ramloop[10].ram.r_n_7 }),
@@ -920,7 +918,7 @@ module rx_packet_fifo_blk_mem_gen_generic_cstr
         .ram_full_fb_i_reg(ram_full_fb_i_reg_0),
         .rd_clk(rd_clk),
         .wr_clk(wr_clk));
-  rx_packet_fifo_blk_mem_gen_prim_width__parameterized10 \ramloop[11].ram.r 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized10 \ramloop[11].ram.r 
        (.Q(Q[11:0]),
         .WEA(WEA),
         .din(din[31:23]),
@@ -931,7 +929,7 @@ module rx_packet_fifo_blk_mem_gen_generic_cstr
         .\gc0.count_d1_reg[11] (\gc0.count_d1_reg[13] [11:0]),
         .rd_clk(rd_clk),
         .wr_clk(wr_clk));
-  rx_packet_fifo_blk_mem_gen_prim_width__parameterized11 \ramloop[12].ram.r 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized11 \ramloop[12].ram.r 
        (.Q(Q[11:0]),
         .din(din[31:23]),
         .\dout[30] ({\ramloop[12].ram.r_n_0 ,\ramloop[12].ram.r_n_1 ,\ramloop[12].ram.r_n_2 ,\ramloop[12].ram.r_n_3 ,\ramloop[12].ram.r_n_4 ,\ramloop[12].ram.r_n_5 ,\ramloop[12].ram.r_n_6 ,\ramloop[12].ram.r_n_7 }),
@@ -942,7 +940,7 @@ module rx_packet_fifo_blk_mem_gen_generic_cstr
         .ram_full_fb_i_reg(ram_full_fb_i_reg_0),
         .rd_clk(rd_clk),
         .wr_clk(wr_clk));
-  rx_packet_fifo_blk_mem_gen_prim_width__parameterized12 \ramloop[13].ram.r 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized12 \ramloop[13].ram.r 
        (.Q(Q[11:0]),
         .WEA(WEA),
         .din(din[31:23]),
@@ -953,7 +951,7 @@ module rx_packet_fifo_blk_mem_gen_generic_cstr
         .\gc0.count_d1_reg[11] (\gc0.count_d1_reg[13] [11:0]),
         .rd_clk(rd_clk),
         .wr_clk(wr_clk));
-  rx_packet_fifo_blk_mem_gen_prim_width__parameterized13 \ramloop[14].ram.r 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized13 \ramloop[14].ram.r 
        (.Q(Q[11:0]),
         .din(din[31:23]),
         .\dout[30] ({\ramloop[14].ram.r_n_0 ,\ramloop[14].ram.r_n_1 ,\ramloop[14].ram.r_n_2 ,\ramloop[14].ram.r_n_3 ,\ramloop[14].ram.r_n_4 ,\ramloop[14].ram.r_n_5 ,\ramloop[14].ram.r_n_6 ,\ramloop[14].ram.r_n_7 }),
@@ -964,7 +962,7 @@ module rx_packet_fifo_blk_mem_gen_generic_cstr
         .ram_full_fb_i_reg(ram_full_fb_i_reg_0),
         .rd_clk(rd_clk),
         .wr_clk(wr_clk));
-  rx_packet_fifo_blk_mem_gen_prim_width__parameterized0 \ramloop[1].ram.r 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized0 \ramloop[1].ram.r 
        (.Q(Q),
         .din(din[2:1]),
         .dout(dout[2:1]),
@@ -974,7 +972,7 @@ module rx_packet_fifo_blk_mem_gen_generic_cstr
         .ram_full_fb_i_reg_0(ram_full_fb_i_reg),
         .rd_clk(rd_clk),
         .wr_clk(wr_clk));
-  rx_packet_fifo_blk_mem_gen_prim_width__parameterized1 \ramloop[2].ram.r 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized1 \ramloop[2].ram.r 
        (.Q(Q),
         .din(din[4:3]),
         .dout(dout[4:3]),
@@ -984,7 +982,7 @@ module rx_packet_fifo_blk_mem_gen_generic_cstr
         .ram_full_fb_i_reg_0(ram_full_fb_i_reg),
         .rd_clk(rd_clk),
         .wr_clk(wr_clk));
-  rx_packet_fifo_blk_mem_gen_prim_width__parameterized2 \ramloop[3].ram.r 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized2 \ramloop[3].ram.r 
        (.Q(Q[11:0]),
         .din(din[13:5]),
         .\dout[12] ({\ramloop[3].ram.r_n_0 ,\ramloop[3].ram.r_n_1 ,\ramloop[3].ram.r_n_2 ,\ramloop[3].ram.r_n_3 ,\ramloop[3].ram.r_n_4 ,\ramloop[3].ram.r_n_5 ,\ramloop[3].ram.r_n_6 ,\ramloop[3].ram.r_n_7 }),
@@ -995,7 +993,7 @@ module rx_packet_fifo_blk_mem_gen_generic_cstr
         .ram_full_fb_i_reg(ram_full_fb_i_reg),
         .rd_clk(rd_clk),
         .wr_clk(wr_clk));
-  rx_packet_fifo_blk_mem_gen_prim_width__parameterized3 \ramloop[4].ram.r 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized3 \ramloop[4].ram.r 
        (.Q(Q[11:0]),
         .din(din[13:5]),
         .\dout[12] ({\ramloop[4].ram.r_n_0 ,\ramloop[4].ram.r_n_1 ,\ramloop[4].ram.r_n_2 ,\ramloop[4].ram.r_n_3 ,\ramloop[4].ram.r_n_4 ,\ramloop[4].ram.r_n_5 ,\ramloop[4].ram.r_n_6 ,\ramloop[4].ram.r_n_7 }),
@@ -1006,7 +1004,7 @@ module rx_packet_fifo_blk_mem_gen_generic_cstr
         .ram_full_fb_i_reg(ram_full_fb_i_reg),
         .rd_clk(rd_clk),
         .wr_clk(wr_clk));
-  rx_packet_fifo_blk_mem_gen_prim_width__parameterized4 \ramloop[5].ram.r 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized4 \ramloop[5].ram.r 
        (.Q(Q[11:0]),
         .WEA(WEA),
         .din(din[13:5]),
@@ -1017,7 +1015,7 @@ module rx_packet_fifo_blk_mem_gen_generic_cstr
         .\gc0.count_d1_reg[11] (\gc0.count_d1_reg[13] [11:0]),
         .rd_clk(rd_clk),
         .wr_clk(wr_clk));
-  rx_packet_fifo_blk_mem_gen_prim_width__parameterized5 \ramloop[6].ram.r 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized5 \ramloop[6].ram.r 
        (.DOBDO({\ramloop[6].ram.r_n_0 ,\ramloop[6].ram.r_n_1 ,\ramloop[6].ram.r_n_2 ,\ramloop[6].ram.r_n_3 ,\ramloop[6].ram.r_n_4 ,\ramloop[6].ram.r_n_5 ,\ramloop[6].ram.r_n_6 ,\ramloop[6].ram.r_n_7 }),
         .DOPBDOP(\ramloop[6].ram.r_n_8 ),
         .Q(Q[11:0]),
@@ -1028,7 +1026,7 @@ module rx_packet_fifo_blk_mem_gen_generic_cstr
         .ram_full_fb_i_reg(ram_full_fb_i_reg_0),
         .rd_clk(rd_clk),
         .wr_clk(wr_clk));
-  rx_packet_fifo_blk_mem_gen_prim_width__parameterized6 \ramloop[7].ram.r 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized6 \ramloop[7].ram.r 
        (.Q(Q[11:0]),
         .WEA(WEA),
         .din(din[22:14]),
@@ -1039,7 +1037,7 @@ module rx_packet_fifo_blk_mem_gen_generic_cstr
         .\gc0.count_d1_reg[11] (\gc0.count_d1_reg[13] [11:0]),
         .rd_clk(rd_clk),
         .wr_clk(wr_clk));
-  rx_packet_fifo_blk_mem_gen_prim_width__parameterized7 \ramloop[8].ram.r 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized7 \ramloop[8].ram.r 
        (.Q(Q[11:0]),
         .din(din[22:14]),
         .\dout[21] ({\ramloop[8].ram.r_n_0 ,\ramloop[8].ram.r_n_1 ,\ramloop[8].ram.r_n_2 ,\ramloop[8].ram.r_n_3 ,\ramloop[8].ram.r_n_4 ,\ramloop[8].ram.r_n_5 ,\ramloop[8].ram.r_n_6 ,\ramloop[8].ram.r_n_7 }),
@@ -1050,7 +1048,7 @@ module rx_packet_fifo_blk_mem_gen_generic_cstr
         .ram_full_fb_i_reg(ram_full_fb_i_reg_0),
         .rd_clk(rd_clk),
         .wr_clk(wr_clk));
-  rx_packet_fifo_blk_mem_gen_prim_width__parameterized8 \ramloop[9].ram.r 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized8 \ramloop[9].ram.r 
        (.Q(Q[11:0]),
         .WEA(WEA),
         .din(din[22:14]),
@@ -1064,7 +1062,7 @@ module rx_packet_fifo_blk_mem_gen_generic_cstr
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_mux" *) 
-module rx_packet_fifo_blk_mem_gen_mux__parameterized0
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_mux__parameterized0
    (dout,
     \gc0.count_d1_reg[13] ,
     rd_en,
@@ -1461,8 +1459,7 @@ module rx_packet_fifo_blk_mem_gen_mux__parameterized0
         .R(1'b0));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
-module rx_packet_fifo_blk_mem_gen_prim_width
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width
    (dout,
     wr_clk,
     rd_clk,
@@ -1492,7 +1489,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width
   wire rd_clk;
   wire wr_clk;
 
-  rx_packet_fifo_blk_mem_gen_prim_wrapper \prim_noinit.ram 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper \prim_noinit.ram 
        (.Q(Q),
         .din(din),
         .dout(dout),
@@ -1505,7 +1502,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
-module rx_packet_fifo_blk_mem_gen_prim_width__parameterized0
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized0
    (dout,
     wr_clk,
     rd_clk,
@@ -1535,7 +1532,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized0
   wire rd_clk;
   wire wr_clk;
 
-  rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized0 \prim_noinit.ram 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized0 \prim_noinit.ram 
        (.Q(Q),
         .din(din),
         .dout(dout),
@@ -1548,7 +1545,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized0
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
-module rx_packet_fifo_blk_mem_gen_prim_width__parameterized1
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized1
    (dout,
     wr_clk,
     rd_clk,
@@ -1578,7 +1575,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized1
   wire rd_clk;
   wire wr_clk;
 
-  rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized1 \prim_noinit.ram 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized1 \prim_noinit.ram 
        (.Q(Q),
         .din(din),
         .dout(dout),
@@ -1591,7 +1588,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized1
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
-module rx_packet_fifo_blk_mem_gen_prim_width__parameterized10
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized10
    (\dout[30] ,
     \dout[31] ,
     wr_clk,
@@ -1624,7 +1621,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized10
   wire rd_clk;
   wire wr_clk;
 
-  rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized10 \prim_noinit.ram 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized10 \prim_noinit.ram 
        (.Q(Q),
         .WEA(WEA),
         .din(din),
@@ -1638,7 +1635,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized10
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
-module rx_packet_fifo_blk_mem_gen_prim_width__parameterized11
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized11
    (\dout[30] ,
     \dout[31] ,
     wr_clk,
@@ -1671,7 +1668,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized11
   wire rd_clk;
   wire wr_clk;
 
-  rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized11 \prim_noinit.ram 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized11 \prim_noinit.ram 
        (.Q(Q),
         .din(din),
         .\dout[30] (\dout[30] ),
@@ -1685,7 +1682,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized11
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
-module rx_packet_fifo_blk_mem_gen_prim_width__parameterized12
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized12
    (\dout[30] ,
     \dout[31] ,
     wr_clk,
@@ -1718,7 +1715,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized12
   wire rd_clk;
   wire wr_clk;
 
-  rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized12 \prim_noinit.ram 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized12 \prim_noinit.ram 
        (.Q(Q),
         .WEA(WEA),
         .din(din),
@@ -1732,7 +1729,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized12
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
-module rx_packet_fifo_blk_mem_gen_prim_width__parameterized13
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized13
    (\dout[30] ,
     \dout[31] ,
     wr_clk,
@@ -1765,7 +1762,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized13
   wire rd_clk;
   wire wr_clk;
 
-  rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized13 \prim_noinit.ram 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized13 \prim_noinit.ram 
        (.Q(Q),
         .din(din),
         .\dout[30] (\dout[30] ),
@@ -1779,7 +1776,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized13
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
-module rx_packet_fifo_blk_mem_gen_prim_width__parameterized2
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized2
    (\dout[12] ,
     \dout[13] ,
     wr_clk,
@@ -1812,7 +1809,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized2
   wire rd_clk;
   wire wr_clk;
 
-  rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized2 \prim_noinit.ram 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized2 \prim_noinit.ram 
        (.Q(Q),
         .din(din),
         .\dout[12] (\dout[12] ),
@@ -1826,7 +1823,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized2
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
-module rx_packet_fifo_blk_mem_gen_prim_width__parameterized3
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized3
    (\dout[12] ,
     \dout[13] ,
     wr_clk,
@@ -1859,7 +1856,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized3
   wire rd_clk;
   wire wr_clk;
 
-  rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized3 \prim_noinit.ram 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized3 \prim_noinit.ram 
        (.Q(Q),
         .din(din),
         .\dout[12] (\dout[12] ),
@@ -1873,7 +1870,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized3
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
-module rx_packet_fifo_blk_mem_gen_prim_width__parameterized4
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized4
    (\dout[12] ,
     \dout[13] ,
     wr_clk,
@@ -1906,7 +1903,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized4
   wire rd_clk;
   wire wr_clk;
 
-  rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized4 \prim_noinit.ram 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized4 \prim_noinit.ram 
        (.Q(Q),
         .WEA(WEA),
         .din(din),
@@ -1920,7 +1917,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized4
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
-module rx_packet_fifo_blk_mem_gen_prim_width__parameterized5
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized5
    (DOBDO,
     DOPBDOP,
     wr_clk,
@@ -1953,7 +1950,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized5
   wire rd_clk;
   wire wr_clk;
 
-  rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized5 \prim_noinit.ram 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized5 \prim_noinit.ram 
        (.DOBDO(DOBDO),
         .DOPBDOP(DOPBDOP),
         .Q(Q),
@@ -1967,7 +1964,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized5
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
-module rx_packet_fifo_blk_mem_gen_prim_width__parameterized6
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized6
    (\dout[21] ,
     \dout[22] ,
     wr_clk,
@@ -2000,7 +1997,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized6
   wire rd_clk;
   wire wr_clk;
 
-  rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized6 \prim_noinit.ram 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized6 \prim_noinit.ram 
        (.Q(Q),
         .WEA(WEA),
         .din(din),
@@ -2014,7 +2011,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized6
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
-module rx_packet_fifo_blk_mem_gen_prim_width__parameterized7
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized7
    (\dout[21] ,
     \dout[22] ,
     wr_clk,
@@ -2047,7 +2044,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized7
   wire rd_clk;
   wire wr_clk;
 
-  rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized7 \prim_noinit.ram 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized7 \prim_noinit.ram 
        (.Q(Q),
         .din(din),
         .\dout[21] (\dout[21] ),
@@ -2061,7 +2058,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized7
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
-module rx_packet_fifo_blk_mem_gen_prim_width__parameterized8
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized8
    (\dout[21] ,
     \dout[22] ,
     wr_clk,
@@ -2094,7 +2091,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized8
   wire rd_clk;
   wire wr_clk;
 
-  rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized8 \prim_noinit.ram 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized8 \prim_noinit.ram 
        (.Q(Q),
         .WEA(WEA),
         .din(din),
@@ -2108,7 +2105,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized8
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
-module rx_packet_fifo_blk_mem_gen_prim_width__parameterized9
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized9
    (\dout[21] ,
     \dout[22] ,
     wr_clk,
@@ -2141,7 +2138,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized9
   wire rd_clk;
   wire wr_clk;
 
-  rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized9 \prim_noinit.ram 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized9 \prim_noinit.ram 
        (.Q(Q),
         .din(din),
         .\dout[21] (\dout[21] ),
@@ -2154,8 +2151,7 @@ module rx_packet_fifo_blk_mem_gen_prim_width__parameterized9
         .wr_clk(wr_clk));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
-module rx_packet_fifo_blk_mem_gen_prim_wrapper
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper
    (dout,
     wr_clk,
     rd_clk,
@@ -2317,7 +2313,7 @@ module rx_packet_fifo_blk_mem_gen_prim_wrapper
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
-module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized0
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized0
    (dout,
     wr_clk,
     rd_clk,
@@ -2571,7 +2567,7 @@ module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized0
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
-module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized1
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized1
    (dout,
     wr_clk,
     rd_clk,
@@ -2825,7 +2821,7 @@ module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized1
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
-module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized10
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized10
    (\dout[30] ,
     \dout[31] ,
     wr_clk,
@@ -3082,7 +3078,7 @@ module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized10
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
-module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized11
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized11
    (\dout[30] ,
     \dout[31] ,
     wr_clk,
@@ -3339,7 +3335,7 @@ module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized11
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
-module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized12
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized12
    (\dout[30] ,
     \dout[31] ,
     wr_clk,
@@ -3596,7 +3592,7 @@ module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized12
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
-module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized13
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized13
    (\dout[30] ,
     \dout[31] ,
     wr_clk,
@@ -3853,7 +3849,7 @@ module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized13
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
-module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized2
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized2
    (\dout[12] ,
     \dout[13] ,
     wr_clk,
@@ -4110,7 +4106,7 @@ module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized2
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
-module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized3
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized3
    (\dout[12] ,
     \dout[13] ,
     wr_clk,
@@ -4367,7 +4363,7 @@ module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized3
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
-module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized4
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized4
    (\dout[12] ,
     \dout[13] ,
     wr_clk,
@@ -4624,7 +4620,7 @@ module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized4
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
-module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized5
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized5
    (DOBDO,
     DOPBDOP,
     wr_clk,
@@ -4881,7 +4877,7 @@ module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized5
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
-module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized6
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized6
    (\dout[21] ,
     \dout[22] ,
     wr_clk,
@@ -5138,7 +5134,7 @@ module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized6
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
-module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized7
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized7
    (\dout[21] ,
     \dout[22] ,
     wr_clk,
@@ -5395,7 +5391,7 @@ module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized7
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
-module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized8
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized8
    (\dout[21] ,
     \dout[22] ,
     wr_clk,
@@ -5652,7 +5648,7 @@ module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized8
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
-module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized9
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized9
    (\dout[21] ,
     \dout[22] ,
     wr_clk,
@@ -5908,8 +5904,7 @@ module rx_packet_fifo_blk_mem_gen_prim_wrapper__parameterized9
         .WEBWE({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_top" *) 
-module rx_packet_fifo_blk_mem_gen_top
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_top
    (dout,
     wr_clk,
     rd_clk,
@@ -5957,7 +5952,7 @@ module rx_packet_fifo_blk_mem_gen_top
   wire wr_clk;
   wire wr_en;
 
-  rx_packet_fifo_blk_mem_gen_generic_cstr \valid.cstr 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_generic_cstr \valid.cstr 
        (.Q(Q),
         .WEA(WEA),
         .din(din),
@@ -5975,8 +5970,7 @@ module rx_packet_fifo_blk_mem_gen_top
         .wr_en(wr_en));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_v8_3_4" *) 
-module rx_packet_fifo_blk_mem_gen_v8_3_4
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_v8_3_4
    (dout,
     wr_clk,
     rd_clk,
@@ -6024,7 +6018,7 @@ module rx_packet_fifo_blk_mem_gen_v8_3_4
   wire wr_clk;
   wire wr_en;
 
-  rx_packet_fifo_blk_mem_gen_v8_3_4_synth inst_blk_mem_gen
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_v8_3_4_synth inst_blk_mem_gen
        (.Q(Q),
         .WEA(WEA),
         .din(din),
@@ -6042,8 +6036,7 @@ module rx_packet_fifo_blk_mem_gen_v8_3_4
         .wr_en(wr_en));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_v8_3_4_synth" *) 
-module rx_packet_fifo_blk_mem_gen_v8_3_4_synth
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_v8_3_4_synth
    (dout,
     wr_clk,
     rd_clk,
@@ -6091,7 +6084,7 @@ module rx_packet_fifo_blk_mem_gen_v8_3_4_synth
   wire wr_clk;
   wire wr_en;
 
-  rx_packet_fifo_blk_mem_gen_top \gnbram.gnativebmg.native_blk_mem_gen 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_top \gnbram.gnativebmg.native_blk_mem_gen 
        (.Q(Q),
         .WEA(WEA),
         .din(din),
@@ -6109,8 +6102,7 @@ module rx_packet_fifo_blk_mem_gen_v8_3_4_synth
         .wr_en(wr_en));
 endmodule
 
-(* ORIG_REF_NAME = "clk_x_pntrs" *) 
-module rx_packet_fifo_clk_x_pntrs
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_clk_x_pntrs
    (S,
     WR_PNTR_RD,
     \gdiff.diff_pntr_pad_reg[12] ,
@@ -6178,20 +6170,20 @@ module rx_packet_fifo_clk_x_pntrs
   wire wr_clk;
   wire [13:0]wr_pntr_gc;
 
-  rx_packet_fifo_synchronizer_ff \gnxpm_cdc.gsync_stage[1].rd_stg_inst 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_synchronizer_ff \gnxpm_cdc.gsync_stage[1].rd_stg_inst 
        (.in0(wr_pntr_gc),
         .out(p_3_out),
         .rd_clk(rd_clk));
-  rx_packet_fifo_synchronizer_ff_4 \gnxpm_cdc.gsync_stage[1].wr_stg_inst 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_synchronizer_ff_4 \gnxpm_cdc.gsync_stage[1].wr_stg_inst 
        (.Q(rd_pntr_gc),
         .out(p_4_out),
         .wr_clk(wr_clk));
-  rx_packet_fifo_synchronizer_ff_5 \gnxpm_cdc.gsync_stage[2].rd_stg_inst 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_synchronizer_ff_5 \gnxpm_cdc.gsync_stage[2].rd_stg_inst 
        (.D({p_0_out,gray2bin}),
         .\gnxpm_cdc.wr_pntr_bin_reg[13] (p_5_out),
         .out(p_3_out),
         .rd_clk(rd_clk));
-  rx_packet_fifo_synchronizer_ff_6 \gnxpm_cdc.gsync_stage[2].wr_stg_inst 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_synchronizer_ff_6 \gnxpm_cdc.gsync_stage[2].wr_stg_inst 
        (.D({\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_1 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_2 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_3 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_4 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_5 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_6 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_7 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_8 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_9 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_10 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_11 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_12 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_13 }),
         .\gnxpm_cdc.rd_pntr_bin_reg[13] (p_6_out),
         .out(p_4_out),
@@ -6910,8 +6902,7 @@ module rx_packet_fifo_clk_x_pntrs
         .O(S[0]));
 endmodule
 
-(* ORIG_REF_NAME = "compare" *) 
-module rx_packet_fifo_compare
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_compare
    (ram_full_i_reg,
     wr_en,
     out,
@@ -7030,7 +7021,7 @@ module rx_packet_fifo_compare
 endmodule
 
 (* ORIG_REF_NAME = "compare" *) 
-module rx_packet_fifo_compare_1
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_compare_1
    (comp2,
     D,
     RD_PNTR_WR);
@@ -7131,7 +7122,7 @@ module rx_packet_fifo_compare_1
 endmodule
 
 (* ORIG_REF_NAME = "compare" *) 
-module rx_packet_fifo_compare_2
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_compare_2
    (comp0,
     WR_PNTR_RD,
     Q);
@@ -7232,7 +7223,7 @@ module rx_packet_fifo_compare_2
 endmodule
 
 (* ORIG_REF_NAME = "compare" *) 
-module rx_packet_fifo_compare_3
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_compare_3
    (comp1,
     WR_PNTR_RD,
     D);
@@ -7332,8 +7323,7 @@ module rx_packet_fifo_compare_3
         .O(v1_reg[6]));
 endmodule
 
-(* ORIG_REF_NAME = "fifo_generator_ramfifo" *) 
-module rx_packet_fifo_fifo_generator_ramfifo
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_fifo_generator_ramfifo
    (dout,
     empty,
     full,
@@ -7388,7 +7378,7 @@ module rx_packet_fifo_fifo_generator_ramfifo
   wire wr_clk;
   wire wr_en;
 
-  rx_packet_fifo_clk_x_pntrs \gntv_or_sync_fifo.gcx.clkx 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_clk_x_pntrs \gntv_or_sync_fifo.gcx.clkx 
        (.Q(p_0_out_0),
         .RD_PNTR_WR(p_23_out),
         .S({\gntv_or_sync_fifo.gcx.clkx_n_0 ,\gntv_or_sync_fifo.gcx.clkx_n_1 ,\gntv_or_sync_fifo.gcx.clkx_n_2 ,\gntv_or_sync_fifo.gcx.clkx_n_3 }),
@@ -7399,7 +7389,7 @@ module rx_packet_fifo_fifo_generator_ramfifo
         .\gic0.gc0.count_d2_reg[13] (p_12_out),
         .rd_clk(rd_clk),
         .wr_clk(wr_clk));
-  rx_packet_fifo_rd_logic \gntv_or_sync_fifo.gl0.rd 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_rd_logic \gntv_or_sync_fifo.gl0.rd 
        (.\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram (\gntv_or_sync_fifo.gl0.rd_n_3 ),
         .Q(p_0_out_0),
         .S({\gntv_or_sync_fifo.gcx.clkx_n_0 ,\gntv_or_sync_fifo.gcx.clkx_n_1 ,\gntv_or_sync_fifo.gcx.clkx_n_2 ,\gntv_or_sync_fifo.gcx.clkx_n_3 }),
@@ -7412,7 +7402,7 @@ module rx_packet_fifo_fifo_generator_ramfifo
         .prog_empty(prog_empty),
         .rd_clk(rd_clk),
         .rd_en(rd_en));
-  rx_packet_fifo_wr_logic \gntv_or_sync_fifo.gl0.wr 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_wr_logic \gntv_or_sync_fifo.gl0.wr 
        (.\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram (\gntv_or_sync_fifo.gl0.wr_n_2 ),
         .\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_0 (\gntv_or_sync_fifo.gl0.wr_n_18 ),
         .\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_1 (\gntv_or_sync_fifo.gl0.wr_n_19 ),
@@ -7423,7 +7413,7 @@ module rx_packet_fifo_fifo_generator_ramfifo
         .out(\gntv_or_sync_fifo.gl0.wr_n_1 ),
         .wr_clk(wr_clk),
         .wr_en(wr_en));
-  rx_packet_fifo_memory \gntv_or_sync_fifo.mem 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_memory \gntv_or_sync_fifo.mem 
        (.Q(p_12_out),
         .WEA(\gntv_or_sync_fifo.gl0.wr_n_17 ),
         .din(din),
@@ -7441,8 +7431,7 @@ module rx_packet_fifo_fifo_generator_ramfifo
         .wr_en(wr_en));
 endmodule
 
-(* ORIG_REF_NAME = "fifo_generator_top" *) 
-module rx_packet_fifo_fifo_generator_top
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_fifo_generator_top
    (dout,
     empty,
     full,
@@ -7472,7 +7461,7 @@ module rx_packet_fifo_fifo_generator_top
   wire wr_clk;
   wire wr_en;
 
-  rx_packet_fifo_fifo_generator_ramfifo \grf.rf 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_fifo_generator_ramfifo \grf.rf 
        (.din(din),
         .dout(dout),
         .empty(empty),
@@ -7551,8 +7540,8 @@ endmodule
 (* C_WR_DEPTH_WRCH = "16" *) (* C_WR_FREQ = "1" *) (* C_WR_PNTR_WIDTH = "14" *) 
 (* C_WR_PNTR_WIDTH_AXIS = "10" *) (* C_WR_PNTR_WIDTH_RACH = "4" *) (* C_WR_PNTR_WIDTH_RDCH = "10" *) 
 (* C_WR_PNTR_WIDTH_WACH = "4" *) (* C_WR_PNTR_WIDTH_WDCH = "10" *) (* C_WR_PNTR_WIDTH_WRCH = "4" *) 
-(* C_WR_RESPONSE_LATENCY = "1" *) (* ORIG_REF_NAME = "fifo_generator_v13_1_2" *) 
-module rx_packet_fifo_fifo_generator_v13_1_2
+(* C_WR_RESPONSE_LATENCY = "1" *) 
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_fifo_generator_v13_1_2
    (backup,
     backup_marker,
     clk,
@@ -8568,7 +8557,7 @@ module rx_packet_fifo_fifo_generator_v13_1_2
        (.G(\<const0> ));
   VCC VCC
        (.P(\<const1> ));
-  rx_packet_fifo_fifo_generator_v13_1_2_synth inst_fifo_gen
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_fifo_generator_v13_1_2_synth inst_fifo_gen
        (.din(din),
         .dout(dout),
         .empty(empty),
@@ -8580,8 +8569,7 @@ module rx_packet_fifo_fifo_generator_v13_1_2
         .wr_en(wr_en));
 endmodule
 
-(* ORIG_REF_NAME = "fifo_generator_v13_1_2_synth" *) 
-module rx_packet_fifo_fifo_generator_v13_1_2_synth
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_fifo_generator_v13_1_2_synth
    (dout,
     empty,
     full,
@@ -8611,7 +8599,7 @@ module rx_packet_fifo_fifo_generator_v13_1_2_synth
   wire wr_clk;
   wire wr_en;
 
-  rx_packet_fifo_fifo_generator_top \gconvfifo.rf 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_fifo_generator_top \gconvfifo.rf 
        (.din(din),
         .dout(dout),
         .empty(empty),
@@ -8623,8 +8611,7 @@ module rx_packet_fifo_fifo_generator_v13_1_2_synth
         .wr_en(wr_en));
 endmodule
 
-(* ORIG_REF_NAME = "memory" *) 
-module rx_packet_fifo_memory
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_memory
    (dout,
     wr_clk,
     rd_clk,
@@ -8672,7 +8659,7 @@ module rx_packet_fifo_memory
   wire wr_clk;
   wire wr_en;
 
-  rx_packet_fifo_blk_mem_gen_v8_3_4 \gbm.gbmg.gbmga.ngecc.bmg 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_v8_3_4 \gbm.gbmg.gbmga.ngecc.bmg 
        (.Q(Q),
         .WEA(WEA),
         .din(din),
@@ -8690,8 +8677,7 @@ module rx_packet_fifo_memory
         .wr_en(wr_en));
 endmodule
 
-(* ORIG_REF_NAME = "rd_bin_cntr" *) 
-module rx_packet_fifo_rd_bin_cntr
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_rd_bin_cntr
    (D,
     \DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram ,
     Q,
@@ -9090,8 +9076,7 @@ module rx_packet_fifo_rd_bin_cntr
         .R(1'b0));
 endmodule
 
-(* ORIG_REF_NAME = "rd_logic" *) 
-module rx_packet_fifo_rd_logic
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_rd_logic
    (empty,
     out,
     prog_empty,
@@ -9133,7 +9118,7 @@ module rx_packet_fifo_rd_logic
   wire rd_en;
   wire [13:0]rd_pntr_plus1;
 
-  rx_packet_fifo_rd_pe_as \gras.gpe.rdpe 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_rd_pe_as \gras.gpe.rdpe 
        (.S(S),
         .WR_PNTR_RD(WR_PNTR_RD[12:0]),
         .\gnxpm_cdc.wr_pntr_bin_reg[11] (\gnxpm_cdc.wr_pntr_bin_reg[11] ),
@@ -9143,7 +9128,7 @@ module rx_packet_fifo_rd_logic
         .p_0_out(p_0_out),
         .prog_empty(prog_empty),
         .rd_clk(rd_clk));
-  rx_packet_fifo_rd_status_flags_as \gras.rsts 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_rd_status_flags_as \gras.rsts 
        (.D(rd_pntr_plus1),
         .E(\gras.rsts_n_2 ),
         .Q(Q),
@@ -9153,7 +9138,7 @@ module rx_packet_fifo_rd_logic
         .p_0_out(p_0_out),
         .rd_clk(rd_clk),
         .rd_en(rd_en));
-  rx_packet_fifo_rd_bin_cntr rpntr
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_rd_bin_cntr rpntr
        (.D(rd_pntr_plus1),
         .\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram (\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram ),
         .E(\gras.rsts_n_2 ),
@@ -9163,8 +9148,7 @@ module rx_packet_fifo_rd_logic
         .rd_en(rd_en));
 endmodule
 
-(* ORIG_REF_NAME = "rd_pe_as" *) 
-module rx_packet_fifo_rd_pe_as
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_rd_pe_as
    (prog_empty,
     p_0_out,
     WR_PNTR_RD,
@@ -9295,8 +9279,7 @@ module rx_packet_fifo_rd_pe_as
         .S({1'b0,1'b0,\gnxpm_cdc.wr_pntr_bin_reg[13] }));
 endmodule
 
-(* ORIG_REF_NAME = "rd_status_flags_as" *) 
-module rx_packet_fifo_rd_status_flags_as
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_rd_status_flags_as
    (empty,
     out,
     E,
@@ -9331,11 +9314,11 @@ module rx_packet_fifo_rd_status_flags_as
 
   assign empty = ram_empty_i;
   assign out = ram_empty_fb_i;
-  rx_packet_fifo_compare_2 c0
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_compare_2 c0
        (.Q(Q),
         .WR_PNTR_RD(WR_PNTR_RD),
         .comp0(comp0));
-  rx_packet_fifo_compare_3 c1
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_compare_3 c1
        (.D(D),
         .WR_PNTR_RD(WR_PNTR_RD),
         .comp1(comp1));
@@ -9383,8 +9366,7 @@ module rx_packet_fifo_rd_status_flags_as
         .O(ram_empty_i_reg0_n_0));
 endmodule
 
-(* ORIG_REF_NAME = "synchronizer_ff" *) 
-module rx_packet_fifo_synchronizer_ff
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_synchronizer_ff
    (out,
     in0,
     rd_clk);
@@ -9554,7 +9536,7 @@ module rx_packet_fifo_synchronizer_ff
 endmodule
 
 (* ORIG_REF_NAME = "synchronizer_ff" *) 
-module rx_packet_fifo_synchronizer_ff_4
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_synchronizer_ff_4
    (out,
     Q,
     wr_clk);
@@ -9724,7 +9706,7 @@ module rx_packet_fifo_synchronizer_ff_4
 endmodule
 
 (* ORIG_REF_NAME = "synchronizer_ff" *) 
-module rx_packet_fifo_synchronizer_ff_5
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_synchronizer_ff_5
    (\gnxpm_cdc.wr_pntr_bin_reg[13] ,
     D,
     out,
@@ -10097,7 +10079,7 @@ module rx_packet_fifo_synchronizer_ff_5
 endmodule
 
 (* ORIG_REF_NAME = "synchronizer_ff" *) 
-module rx_packet_fifo_synchronizer_ff_6
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_synchronizer_ff_6
    (\gnxpm_cdc.rd_pntr_bin_reg[13] ,
     D,
     out,
@@ -10400,8 +10382,7 @@ module rx_packet_fifo_synchronizer_ff_6
         .O(D[9]));
 endmodule
 
-(* ORIG_REF_NAME = "wr_bin_cntr" *) 
-module rx_packet_fifo_wr_bin_cntr
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_wr_bin_cntr
    (D,
     \DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram ,
     Q,
@@ -10915,8 +10896,7 @@ module rx_packet_fifo_wr_bin_cntr
         .R(1'b0));
 endmodule
 
-(* ORIG_REF_NAME = "wr_logic" *) 
-module rx_packet_fifo_wr_logic
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_wr_logic
    (full,
     out,
     \DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram ,
@@ -10952,7 +10932,7 @@ module rx_packet_fifo_wr_logic
   wire wr_en;
   wire [13:0]wr_pntr_plus2;
 
-  rx_packet_fifo_wr_status_flags_as \gwas.wsts 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_wr_status_flags_as \gwas.wsts 
        (.D(wr_pntr_plus2),
         .\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram (\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_0 ),
         .\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_0 (\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_1 ),
@@ -10964,7 +10944,7 @@ module rx_packet_fifo_wr_logic
         .out(out),
         .wr_clk(wr_clk),
         .wr_en(wr_en));
-  rx_packet_fifo_wr_bin_cntr wpntr
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_wr_bin_cntr wpntr
        (.D(wr_pntr_plus2),
         .\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram (\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram ),
         .E(\gwas.wsts_n_2 ),
@@ -10975,8 +10955,7 @@ module rx_packet_fifo_wr_logic
         .wr_en(wr_en));
 endmodule
 
-(* ORIG_REF_NAME = "wr_status_flags_as" *) 
-module rx_packet_fifo_wr_status_flags_as
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_wr_status_flags_as
    (full,
     out,
     E,
@@ -11034,14 +11013,14 @@ module rx_packet_fifo_wr_status_flags_as
        (.I0(wr_en),
         .I1(ram_full_fb_i),
         .O(\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_0 ));
-  rx_packet_fifo_compare c1
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_compare c1
        (.Q(Q),
         .RD_PNTR_WR(RD_PNTR_WR),
         .comp2(comp2),
         .out(ram_full_fb_i),
         .ram_full_i_reg(c1_n_0),
         .wr_en(wr_en));
-  rx_packet_fifo_compare_1 c2
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_compare_1 c2
        (.D(D),
         .RD_PNTR_WR(RD_PNTR_WR),
         .comp2(comp2));

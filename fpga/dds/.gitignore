@@ -1,0 +1,4 @@
+*.pyc
+*.gen.vhd
+bin/
+*.csv

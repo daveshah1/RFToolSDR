@@ -3,8 +3,8 @@
 // Tool Version: Vivado v.2016.3 (lin64) Build 1682563 Mon Oct 10 19:07:26 MDT 2016
 // Date        : Sat Apr 15 09:49:57 2017
 // Host        : david-desktop-arch running 64-bit unknown
-// Command     : write_verilog -force -mode funcsim
-//               /home/dave/misc-projects/rftool-fpga/projects/rx_only/rx_only.srcs/sources_1/ip/iq_sample_fifo/iq_sample_fifo_sim_netlist.v
+// Command     : write_verilog -force -mode funcsim -rename_top decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix -prefix
+//               decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_ iq_sample_fifo_sim_netlist.v
 // Design      : iq_sample_fifo
 // Purpose     : This verilog netlist is a functional simulation representation of the design and should not be modified
 //               or synthesized. This netlist cannot be used for SDF annotated simulation.
@@ -14,7 +14,7 @@
 
 (* CHECK_LICENSE_TYPE = "iq_sample_fifo,fifo_generator_v13_1_2,{}" *) (* downgradeipidentifiedwarnings = "yes" *) (* x_core_info = "fifo_generator_v13_1_2,Vivado 2016.3" *) 
 (* NotValidForBitStream *)
-module iq_sample_fifo
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix
    (wr_clk,
     rd_clk,
     din,
@@ -366,7 +366,7 @@ module iq_sample_fifo
   (* C_WR_PNTR_WIDTH_WDCH = "10" *) 
   (* C_WR_PNTR_WIDTH_WRCH = "4" *) 
   (* C_WR_RESPONSE_LATENCY = "1" *) 
-  iq_sample_fifo_fifo_generator_v13_1_2 U0
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_fifo_generator_v13_1_2 U0
        (.almost_empty(NLW_U0_almost_empty_UNCONNECTED),
         .almost_full(NLW_U0_almost_full_UNCONNECTED),
         .axi_ar_data_count(NLW_U0_axi_ar_data_count_UNCONNECTED[4:0]),
@@ -600,8 +600,7 @@ module iq_sample_fifo
         .wr_rst_busy(NLW_U0_wr_rst_busy_UNCONNECTED));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_generic_cstr" *) 
-module iq_sample_fifo_blk_mem_gen_generic_cstr
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_generic_cstr
    (dout,
     \no_softecc_sel_reg.ce_pri.sel_pipe_reg[0] ,
     wr_clk,
@@ -685,7 +684,7 @@ module iq_sample_fifo_blk_mem_gen_generic_cstr
   wire rd_clk;
   wire wr_clk;
 
-  iq_sample_fifo_blk_mem_gen_mux__parameterized0 \has_mux_b.B 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_mux__parameterized0 \has_mux_b.B 
        (.\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram ({\ramloop[2].ram.r_n_0 ,\ramloop[2].ram.r_n_1 ,\ramloop[2].ram.r_n_2 ,\ramloop[2].ram.r_n_3 ,\ramloop[2].ram.r_n_4 ,\ramloop[2].ram.r_n_5 ,\ramloop[2].ram.r_n_6 ,\ramloop[2].ram.r_n_7 }),
         .\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_0 (\ramloop[2].ram.r_n_8 ),
         .\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_1 ({\ramloop[5].ram.r_n_0 ,\ramloop[5].ram.r_n_1 ,\ramloop[5].ram.r_n_2 ,\ramloop[5].ram.r_n_3 ,\ramloop[5].ram.r_n_4 ,\ramloop[5].ram.r_n_5 ,\ramloop[5].ram.r_n_6 ,\ramloop[5].ram.r_n_7 }),
@@ -698,7 +697,7 @@ module iq_sample_fifo_blk_mem_gen_generic_cstr
         .\gc0.count_d1_reg[12] (\gc0.count_d1_reg[12]_0 ),
         .\no_softecc_sel_reg.ce_pri.sel_pipe_reg[0]_0 (\no_softecc_sel_reg.ce_pri.sel_pipe_reg[0] ),
         .rd_clk(rd_clk));
-  iq_sample_fifo_blk_mem_gen_prim_width \ramloop[0].ram.r 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width \ramloop[0].ram.r 
        (.Q(Q),
         .WEA(WEA),
         .din(din[1:0]),
@@ -708,7 +707,7 @@ module iq_sample_fifo_blk_mem_gen_generic_cstr
         .ram_full_fb_i_reg(ram_full_fb_i_reg),
         .rd_clk(rd_clk),
         .wr_clk(wr_clk));
-  iq_sample_fifo_blk_mem_gen_prim_width__parameterized0 \ramloop[1].ram.r 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized0 \ramloop[1].ram.r 
        (.Q(Q),
         .WEA(WEA),
         .din(din[5:2]),
@@ -718,7 +717,7 @@ module iq_sample_fifo_blk_mem_gen_generic_cstr
         .ram_full_fb_i_reg(ram_full_fb_i_reg),
         .rd_clk(rd_clk),
         .wr_clk(wr_clk));
-  iq_sample_fifo_blk_mem_gen_prim_width__parameterized1 \ramloop[2].ram.r 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized1 \ramloop[2].ram.r 
        (.Q(Q[11:0]),
         .WEA(WEA),
         .din(din[14:6]),
@@ -729,7 +728,7 @@ module iq_sample_fifo_blk_mem_gen_generic_cstr
         .ram_full_fb_i_reg(ram_full_fb_i_reg_0),
         .rd_clk(rd_clk),
         .wr_clk(wr_clk));
-  iq_sample_fifo_blk_mem_gen_prim_width__parameterized2 \ramloop[3].ram.r 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized2 \ramloop[3].ram.r 
        (.DOBDO({\ramloop[3].ram.r_n_0 ,\ramloop[3].ram.r_n_1 ,\ramloop[3].ram.r_n_2 ,\ramloop[3].ram.r_n_3 ,\ramloop[3].ram.r_n_4 ,\ramloop[3].ram.r_n_5 ,\ramloop[3].ram.r_n_6 ,\ramloop[3].ram.r_n_7 }),
         .DOPBDOP(\ramloop[3].ram.r_n_8 ),
         .Q(Q[11:0]),
@@ -740,7 +739,7 @@ module iq_sample_fifo_blk_mem_gen_generic_cstr
         .\gc0.count_d1_reg[11] (\gc0.count_d1_reg[12] [11:0]),
         .rd_clk(rd_clk),
         .wr_clk(wr_clk));
-  iq_sample_fifo_blk_mem_gen_prim_width__parameterized3 \ramloop[4].ram.r 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized3 \ramloop[4].ram.r 
        (.Q(Q[11:0]),
         .WEA(WEA),
         .din(din[23:15]),
@@ -751,7 +750,7 @@ module iq_sample_fifo_blk_mem_gen_generic_cstr
         .ram_full_fb_i_reg(ram_full_fb_i_reg_0),
         .rd_clk(rd_clk),
         .wr_clk(wr_clk));
-  iq_sample_fifo_blk_mem_gen_prim_width__parameterized4 \ramloop[5].ram.r 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized4 \ramloop[5].ram.r 
        (.Q(Q[11:0]),
         .WEA(WEA),
         .din(din[23:15]),
@@ -765,7 +764,7 @@ module iq_sample_fifo_blk_mem_gen_generic_cstr
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_mux" *) 
-module iq_sample_fifo_blk_mem_gen_mux__parameterized0
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_mux__parameterized0
    (\no_softecc_sel_reg.ce_pri.sel_pipe_reg[0]_0 ,
     dout,
     \gc0.count_d1_reg[12] ,
@@ -958,8 +957,7 @@ module iq_sample_fifo_blk_mem_gen_mux__parameterized0
         .R(1'b0));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
-module iq_sample_fifo_blk_mem_gen_prim_width
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width
    (dout,
     wr_clk,
     rd_clk,
@@ -989,7 +987,7 @@ module iq_sample_fifo_blk_mem_gen_prim_width
   wire rd_clk;
   wire wr_clk;
 
-  iq_sample_fifo_blk_mem_gen_prim_wrapper \prim_noinit.ram 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper \prim_noinit.ram 
        (.Q(Q),
         .WEA(WEA),
         .din(din),
@@ -1002,7 +1000,7 @@ module iq_sample_fifo_blk_mem_gen_prim_width
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
-module iq_sample_fifo_blk_mem_gen_prim_width__parameterized0
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized0
    (dout,
     wr_clk,
     rd_clk,
@@ -1032,7 +1030,7 @@ module iq_sample_fifo_blk_mem_gen_prim_width__parameterized0
   wire rd_clk;
   wire wr_clk;
 
-  iq_sample_fifo_blk_mem_gen_prim_wrapper__parameterized0 \prim_noinit.ram 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized0 \prim_noinit.ram 
        (.Q(Q),
         .WEA(WEA),
         .din(din),
@@ -1045,7 +1043,7 @@ module iq_sample_fifo_blk_mem_gen_prim_width__parameterized0
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
-module iq_sample_fifo_blk_mem_gen_prim_width__parameterized1
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized1
    (\dout[13] ,
     \dout[14] ,
     wr_clk,
@@ -1078,7 +1076,7 @@ module iq_sample_fifo_blk_mem_gen_prim_width__parameterized1
   wire rd_clk;
   wire wr_clk;
 
-  iq_sample_fifo_blk_mem_gen_prim_wrapper__parameterized1 \prim_noinit.ram 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized1 \prim_noinit.ram 
        (.Q(Q),
         .WEA(WEA),
         .din(din),
@@ -1092,7 +1090,7 @@ module iq_sample_fifo_blk_mem_gen_prim_width__parameterized1
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
-module iq_sample_fifo_blk_mem_gen_prim_width__parameterized2
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized2
    (DOBDO,
     DOPBDOP,
     wr_clk,
@@ -1125,7 +1123,7 @@ module iq_sample_fifo_blk_mem_gen_prim_width__parameterized2
   wire rd_clk;
   wire wr_clk;
 
-  iq_sample_fifo_blk_mem_gen_prim_wrapper__parameterized2 \prim_noinit.ram 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized2 \prim_noinit.ram 
        (.DOBDO(DOBDO),
         .DOPBDOP(DOPBDOP),
         .Q(Q),
@@ -1139,7 +1137,7 @@ module iq_sample_fifo_blk_mem_gen_prim_width__parameterized2
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
-module iq_sample_fifo_blk_mem_gen_prim_width__parameterized3
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized3
    (\dout[22] ,
     \dout[23] ,
     wr_clk,
@@ -1172,7 +1170,7 @@ module iq_sample_fifo_blk_mem_gen_prim_width__parameterized3
   wire rd_clk;
   wire wr_clk;
 
-  iq_sample_fifo_blk_mem_gen_prim_wrapper__parameterized3 \prim_noinit.ram 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized3 \prim_noinit.ram 
        (.Q(Q),
         .WEA(WEA),
         .din(din),
@@ -1186,7 +1184,7 @@ module iq_sample_fifo_blk_mem_gen_prim_width__parameterized3
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_width" *) 
-module iq_sample_fifo_blk_mem_gen_prim_width__parameterized4
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_width__parameterized4
    (\dout[22] ,
     \dout[23] ,
     wr_clk,
@@ -1219,7 +1217,7 @@ module iq_sample_fifo_blk_mem_gen_prim_width__parameterized4
   wire rd_clk;
   wire wr_clk;
 
-  iq_sample_fifo_blk_mem_gen_prim_wrapper__parameterized4 \prim_noinit.ram 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized4 \prim_noinit.ram 
        (.Q(Q),
         .WEA(WEA),
         .din(din),
@@ -1232,8 +1230,7 @@ module iq_sample_fifo_blk_mem_gen_prim_width__parameterized4
         .wr_clk(wr_clk));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
-module iq_sample_fifo_blk_mem_gen_prim_wrapper
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper
    (dout,
     wr_clk,
     rd_clk,
@@ -1395,7 +1392,7 @@ module iq_sample_fifo_blk_mem_gen_prim_wrapper
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
-module iq_sample_fifo_blk_mem_gen_prim_wrapper__parameterized0
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized0
    (dout,
     wr_clk,
     rd_clk,
@@ -1649,7 +1646,7 @@ module iq_sample_fifo_blk_mem_gen_prim_wrapper__parameterized0
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
-module iq_sample_fifo_blk_mem_gen_prim_wrapper__parameterized1
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized1
    (\dout[13] ,
     \dout[14] ,
     wr_clk,
@@ -1906,7 +1903,7 @@ module iq_sample_fifo_blk_mem_gen_prim_wrapper__parameterized1
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
-module iq_sample_fifo_blk_mem_gen_prim_wrapper__parameterized2
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized2
    (DOBDO,
     DOPBDOP,
     wr_clk,
@@ -2163,7 +2160,7 @@ module iq_sample_fifo_blk_mem_gen_prim_wrapper__parameterized2
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
-module iq_sample_fifo_blk_mem_gen_prim_wrapper__parameterized3
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized3
    (\dout[22] ,
     \dout[23] ,
     wr_clk,
@@ -2420,7 +2417,7 @@ module iq_sample_fifo_blk_mem_gen_prim_wrapper__parameterized3
 endmodule
 
 (* ORIG_REF_NAME = "blk_mem_gen_prim_wrapper" *) 
-module iq_sample_fifo_blk_mem_gen_prim_wrapper__parameterized4
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_prim_wrapper__parameterized4
    (\dout[22] ,
     \dout[23] ,
     wr_clk,
@@ -2676,8 +2673,7 @@ module iq_sample_fifo_blk_mem_gen_prim_wrapper__parameterized4
         .WEBWE({1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0,1'b0}));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_top" *) 
-module iq_sample_fifo_blk_mem_gen_top
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_top
    (dout,
     \no_softecc_sel_reg.ce_pri.sel_pipe_reg[0] ,
     wr_clk,
@@ -2725,7 +2721,7 @@ module iq_sample_fifo_blk_mem_gen_top
   wire rd_clk;
   wire wr_clk;
 
-  iq_sample_fifo_blk_mem_gen_generic_cstr \valid.cstr 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_generic_cstr \valid.cstr 
        (.Q(Q),
         .WEA(WEA),
         .din(din),
@@ -2743,8 +2739,7 @@ module iq_sample_fifo_blk_mem_gen_top
         .wr_clk(wr_clk));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_v8_3_4" *) 
-module iq_sample_fifo_blk_mem_gen_v8_3_4
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_v8_3_4
    (dout,
     \no_softecc_sel_reg.ce_pri.sel_pipe_reg[0] ,
     wr_clk,
@@ -2792,7 +2787,7 @@ module iq_sample_fifo_blk_mem_gen_v8_3_4
   wire rd_clk;
   wire wr_clk;
 
-  iq_sample_fifo_blk_mem_gen_v8_3_4_synth inst_blk_mem_gen
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_v8_3_4_synth inst_blk_mem_gen
        (.Q(Q),
         .WEA(WEA),
         .din(din),
@@ -2810,8 +2805,7 @@ module iq_sample_fifo_blk_mem_gen_v8_3_4
         .wr_clk(wr_clk));
 endmodule
 
-(* ORIG_REF_NAME = "blk_mem_gen_v8_3_4_synth" *) 
-module iq_sample_fifo_blk_mem_gen_v8_3_4_synth
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_v8_3_4_synth
    (dout,
     \no_softecc_sel_reg.ce_pri.sel_pipe_reg[0] ,
     wr_clk,
@@ -2859,7 +2853,7 @@ module iq_sample_fifo_blk_mem_gen_v8_3_4_synth
   wire rd_clk;
   wire wr_clk;
 
-  iq_sample_fifo_blk_mem_gen_top \gnbram.gnativebmg.native_blk_mem_gen 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_top \gnbram.gnativebmg.native_blk_mem_gen 
        (.Q(Q),
         .WEA(WEA),
         .din(din),
@@ -2877,8 +2871,7 @@ module iq_sample_fifo_blk_mem_gen_v8_3_4_synth
         .wr_clk(wr_clk));
 endmodule
 
-(* ORIG_REF_NAME = "clk_x_pntrs" *) 
-module iq_sample_fifo_clk_x_pntrs
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_clk_x_pntrs
    (ram_full_i_reg,
     RD_PNTR_WR,
     ram_full_i_reg_0,
@@ -2947,20 +2940,20 @@ module iq_sample_fifo_clk_x_pntrs
        (.I0(p_23_out),
         .I1(D),
         .O(ram_full_i_reg_0));
-  iq_sample_fifo_synchronizer_ff \gnxpm_cdc.gsync_stage[1].rd_stg_inst 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_synchronizer_ff \gnxpm_cdc.gsync_stage[1].rd_stg_inst 
        (.in0(wr_pntr_gc),
         .out(p_3_out),
         .rd_clk(rd_clk));
-  iq_sample_fifo_synchronizer_ff_3 \gnxpm_cdc.gsync_stage[1].wr_stg_inst 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_synchronizer_ff_3 \gnxpm_cdc.gsync_stage[1].wr_stg_inst 
        (.Q(rd_pntr_gc),
         .out(p_4_out),
         .wr_clk(wr_clk));
-  iq_sample_fifo_synchronizer_ff_4 \gnxpm_cdc.gsync_stage[2].rd_stg_inst 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_synchronizer_ff_4 \gnxpm_cdc.gsync_stage[2].rd_stg_inst 
        (.D({p_0_out,gray2bin}),
         .\gnxpm_cdc.wr_pntr_bin_reg[12] (p_5_out),
         .out(p_3_out),
         .rd_clk(rd_clk));
-  iq_sample_fifo_synchronizer_ff_5 \gnxpm_cdc.gsync_stage[2].wr_stg_inst 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_synchronizer_ff_5 \gnxpm_cdc.gsync_stage[2].wr_stg_inst 
        (.D({\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_1 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_2 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_3 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_4 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_5 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_6 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_7 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_8 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_9 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_10 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_11 ,\gnxpm_cdc.gsync_stage[2].wr_stg_inst_n_12 }),
         .\gnxpm_cdc.rd_pntr_bin_reg[12] (p_6_out),
         .out(p_4_out),
@@ -3383,8 +3376,7 @@ module iq_sample_fifo_clk_x_pntrs
         .R(1'b0));
 endmodule
 
-(* ORIG_REF_NAME = "compare" *) 
-module iq_sample_fifo_compare
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_compare
    (ram_full_i_reg,
     \gnxpm_cdc.rd_pntr_bin_reg[12] ,
     wr_en,
@@ -3498,7 +3490,7 @@ module iq_sample_fifo_compare
 endmodule
 
 (* ORIG_REF_NAME = "compare" *) 
-module iq_sample_fifo_compare_0
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_compare_0
    (comp2,
     \gnxpm_cdc.rd_pntr_bin_reg[12] ,
     D,
@@ -3594,7 +3586,7 @@ module iq_sample_fifo_compare_0
 endmodule
 
 (* ORIG_REF_NAME = "compare" *) 
-module iq_sample_fifo_compare_1
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_compare_1
    (comp0,
     \gc0.count_d1_reg[12] ,
     WR_PNTR_RD,
@@ -3690,7 +3682,7 @@ module iq_sample_fifo_compare_1
 endmodule
 
 (* ORIG_REF_NAME = "compare" *) 
-module iq_sample_fifo_compare_2
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_compare_2
    (comp1,
     \gc0.count_reg[12] ,
     WR_PNTR_RD,
@@ -3785,8 +3777,7 @@ module iq_sample_fifo_compare_2
         .O(v1_reg[5]));
 endmodule
 
-(* ORIG_REF_NAME = "fifo_generator_ramfifo" *) 
-module iq_sample_fifo_fifo_generator_ramfifo
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_fifo_generator_ramfifo
    (dout,
     empty,
     full,
@@ -3843,7 +3834,7 @@ module iq_sample_fifo_fifo_generator_ramfifo
   wire wr_en;
   wire [12:12]wr_pntr_plus2;
 
-  iq_sample_fifo_clk_x_pntrs \gntv_or_sync_fifo.gcx.clkx 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_clk_x_pntrs \gntv_or_sync_fifo.gcx.clkx 
        (.D(wr_pntr_plus2),
         .I6({p_0_out[12],\gntv_or_sync_fifo.gl0.rd_n_16 ,\gntv_or_sync_fifo.gl0.rd_n_17 ,\gntv_or_sync_fifo.gl0.rd_n_18 ,\gntv_or_sync_fifo.gl0.rd_n_19 ,\gntv_or_sync_fifo.gl0.rd_n_20 ,\gntv_or_sync_fifo.gl0.rd_n_21 ,\gntv_or_sync_fifo.gl0.rd_n_22 ,\gntv_or_sync_fifo.gl0.rd_n_23 ,\gntv_or_sync_fifo.gl0.rd_n_24 ,\gntv_or_sync_fifo.gl0.rd_n_25 ,\gntv_or_sync_fifo.gl0.rd_n_26 ,\gntv_or_sync_fifo.gl0.rd_n_27 }),
         .Q(p_13_out),
@@ -3855,7 +3846,7 @@ module iq_sample_fifo_fifo_generator_ramfifo
         .ram_full_i_reg_0(\gntv_or_sync_fifo.gcx.clkx_n_13 ),
         .rd_clk(rd_clk),
         .wr_clk(wr_clk));
-  iq_sample_fifo_rd_logic \gntv_or_sync_fifo.gl0.rd 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_rd_logic \gntv_or_sync_fifo.gl0.rd 
        (.\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram (\gntv_or_sync_fifo.gl0.rd_n_1 ),
         .\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_0 (\gntv_or_sync_fifo.gl0.rd_n_29 ),
         .I6({\gntv_or_sync_fifo.gl0.rd_n_16 ,\gntv_or_sync_fifo.gl0.rd_n_17 ,\gntv_or_sync_fifo.gl0.rd_n_18 ,\gntv_or_sync_fifo.gl0.rd_n_19 ,\gntv_or_sync_fifo.gl0.rd_n_20 ,\gntv_or_sync_fifo.gl0.rd_n_21 ,\gntv_or_sync_fifo.gl0.rd_n_22 ,\gntv_or_sync_fifo.gl0.rd_n_23 ,\gntv_or_sync_fifo.gl0.rd_n_24 ,\gntv_or_sync_fifo.gl0.rd_n_25 ,\gntv_or_sync_fifo.gl0.rd_n_26 ,\gntv_or_sync_fifo.gl0.rd_n_27 }),
@@ -3867,7 +3858,7 @@ module iq_sample_fifo_fifo_generator_ramfifo
         .rd_clk(rd_clk),
         .rd_en(rd_en),
         .sel_pipe(sel_pipe));
-  iq_sample_fifo_wr_logic \gntv_or_sync_fifo.gl0.wr 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_wr_logic \gntv_or_sync_fifo.gl0.wr 
        (.D(wr_pntr_plus2),
         .\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram (\gntv_or_sync_fifo.gl0.wr_n_1 ),
         .\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_0 (\gntv_or_sync_fifo.gl0.wr_n_31 ),
@@ -3882,7 +3873,7 @@ module iq_sample_fifo_fifo_generator_ramfifo
         .\gnxpm_cdc.rd_pntr_bin_reg[12]_0 (\gntv_or_sync_fifo.gcx.clkx_n_13 ),
         .wr_clk(wr_clk),
         .wr_en(wr_en));
-  iq_sample_fifo_memory \gntv_or_sync_fifo.mem 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_memory \gntv_or_sync_fifo.mem 
        (.Q(p_12_out),
         .WEA(\gntv_or_sync_fifo.gl0.wr_n_15 ),
         .din(din),
@@ -3900,8 +3891,7 @@ module iq_sample_fifo_fifo_generator_ramfifo
         .wr_clk(wr_clk));
 endmodule
 
-(* ORIG_REF_NAME = "fifo_generator_top" *) 
-module iq_sample_fifo_fifo_generator_top
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_fifo_generator_top
    (dout,
     empty,
     full,
@@ -3928,7 +3918,7 @@ module iq_sample_fifo_fifo_generator_top
   wire wr_clk;
   wire wr_en;
 
-  iq_sample_fifo_fifo_generator_ramfifo \grf.rf 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_fifo_generator_ramfifo \grf.rf 
        (.din(din),
         .dout(dout),
         .empty(empty),
@@ -4006,8 +3996,8 @@ endmodule
 (* C_WR_DEPTH_WRCH = "16" *) (* C_WR_FREQ = "1" *) (* C_WR_PNTR_WIDTH = "13" *) 
 (* C_WR_PNTR_WIDTH_AXIS = "10" *) (* C_WR_PNTR_WIDTH_RACH = "4" *) (* C_WR_PNTR_WIDTH_RDCH = "10" *) 
 (* C_WR_PNTR_WIDTH_WACH = "4" *) (* C_WR_PNTR_WIDTH_WDCH = "10" *) (* C_WR_PNTR_WIDTH_WRCH = "4" *) 
-(* C_WR_RESPONSE_LATENCY = "1" *) (* ORIG_REF_NAME = "fifo_generator_v13_1_2" *) 
-module iq_sample_fifo_fifo_generator_v13_1_2
+(* C_WR_RESPONSE_LATENCY = "1" *) 
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_fifo_generator_v13_1_2
    (backup,
     backup_marker,
     clk,
@@ -5020,7 +5010,7 @@ module iq_sample_fifo_fifo_generator_v13_1_2
        (.G(\<const0> ));
   VCC VCC
        (.P(\<const1> ));
-  iq_sample_fifo_fifo_generator_v13_1_2_synth inst_fifo_gen
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_fifo_generator_v13_1_2_synth inst_fifo_gen
        (.din(din),
         .dout(dout),
         .empty(empty),
@@ -5031,8 +5021,7 @@ module iq_sample_fifo_fifo_generator_v13_1_2
         .wr_en(wr_en));
 endmodule
 
-(* ORIG_REF_NAME = "fifo_generator_v13_1_2_synth" *) 
-module iq_sample_fifo_fifo_generator_v13_1_2_synth
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_fifo_generator_v13_1_2_synth
    (dout,
     empty,
     full,
@@ -5059,7 +5048,7 @@ module iq_sample_fifo_fifo_generator_v13_1_2_synth
   wire wr_clk;
   wire wr_en;
 
-  iq_sample_fifo_fifo_generator_top \gconvfifo.rf 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_fifo_generator_top \gconvfifo.rf 
        (.din(din),
         .dout(dout),
         .empty(empty),
@@ -5070,8 +5059,7 @@ module iq_sample_fifo_fifo_generator_v13_1_2_synth
         .wr_en(wr_en));
 endmodule
 
-(* ORIG_REF_NAME = "memory" *) 
-module iq_sample_fifo_memory
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_memory
    (dout,
     sel_pipe,
     wr_clk,
@@ -5119,7 +5107,7 @@ module iq_sample_fifo_memory
   wire sel_pipe;
   wire wr_clk;
 
-  iq_sample_fifo_blk_mem_gen_v8_3_4 \gbm.gbmg.gbmga.ngecc.bmg 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_blk_mem_gen_v8_3_4 \gbm.gbmg.gbmga.ngecc.bmg 
        (.Q(Q),
         .WEA(WEA),
         .din(din),
@@ -5137,8 +5125,7 @@ module iq_sample_fifo_memory
         .wr_clk(wr_clk));
 endmodule
 
-(* ORIG_REF_NAME = "rd_bin_cntr" *) 
-module iq_sample_fifo_rd_bin_cntr
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_rd_bin_cntr
    (D,
     ram_empty_fb_i_reg,
     Q,
@@ -5635,8 +5622,7 @@ module iq_sample_fifo_rd_bin_cntr
         .O(\no_softecc_sel_reg.ce_pri.sel_pipe_reg[0] ));
 endmodule
 
-(* ORIG_REF_NAME = "rd_logic" *) 
-module iq_sample_fifo_rd_logic
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_rd_logic
    (empty,
     \DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram ,
     Q,
@@ -5677,7 +5663,7 @@ module iq_sample_fifo_rd_logic
   wire rpntr_n_26;
   wire sel_pipe;
 
-  iq_sample_fifo_rd_status_flags_as \gras.rsts 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_rd_status_flags_as \gras.rsts 
        (.D(rd_pntr_plus1),
         .\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram (\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram ),
         .\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_0 (\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_0 ),
@@ -5690,7 +5676,7 @@ module iq_sample_fifo_rd_logic
         .out(p_2_out),
         .rd_clk(rd_clk),
         .rd_en(rd_en));
-  iq_sample_fifo_rd_bin_cntr rpntr
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_rd_bin_cntr rpntr
        (.D(rd_pntr_plus1),
         .E(\gras.rsts_n_3 ),
         .I6(I6),
@@ -5706,8 +5692,7 @@ module iq_sample_fifo_rd_logic
         .sel_pipe(sel_pipe));
 endmodule
 
-(* ORIG_REF_NAME = "rd_status_flags_as" *) 
-module iq_sample_fifo_rd_status_flags_as
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_rd_status_flags_as
    (empty,
     out,
     \DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram ,
@@ -5764,12 +5749,12 @@ module iq_sample_fifo_rd_status_flags_as
         .I1(rd_en),
         .I2(Q[12]),
         .O(\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram ));
-  iq_sample_fifo_compare_1 c0
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_compare_1 c0
        (.Q(Q[11:0]),
         .WR_PNTR_RD(WR_PNTR_RD),
         .comp0(comp0),
         .\gc0.count_d1_reg[12] (\gc0.count_d1_reg[12] ));
-  iq_sample_fifo_compare_2 c1
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_compare_2 c1
        (.D(D),
         .WR_PNTR_RD(WR_PNTR_RD),
         .comp1(comp1),
@@ -5812,8 +5797,7 @@ module iq_sample_fifo_rd_status_flags_as
         .O(ram_empty_i_reg0_n_0));
 endmodule
 
-(* ORIG_REF_NAME = "synchronizer_ff" *) 
-module iq_sample_fifo_synchronizer_ff
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_synchronizer_ff
    (out,
     in0,
     rd_clk);
@@ -5972,7 +5956,7 @@ module iq_sample_fifo_synchronizer_ff
 endmodule
 
 (* ORIG_REF_NAME = "synchronizer_ff" *) 
-module iq_sample_fifo_synchronizer_ff_3
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_synchronizer_ff_3
    (out,
     Q,
     wr_clk);
@@ -6131,7 +6115,7 @@ module iq_sample_fifo_synchronizer_ff_3
 endmodule
 
 (* ORIG_REF_NAME = "synchronizer_ff" *) 
-module iq_sample_fifo_synchronizer_ff_4
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_synchronizer_ff_4
    (\gnxpm_cdc.wr_pntr_bin_reg[12] ,
     D,
     out,
@@ -6415,7 +6399,7 @@ module iq_sample_fifo_synchronizer_ff_4
 endmodule
 
 (* ORIG_REF_NAME = "synchronizer_ff" *) 
-module iq_sample_fifo_synchronizer_ff_5
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_synchronizer_ff_5
    (\gnxpm_cdc.rd_pntr_bin_reg[12] ,
     D,
     out,
@@ -6698,8 +6682,7 @@ module iq_sample_fifo_synchronizer_ff_5
         .O(D[9]));
 endmodule
 
-(* ORIG_REF_NAME = "wr_bin_cntr" *) 
-module iq_sample_fifo_wr_bin_cntr
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_wr_bin_cntr
    (D,
     ena_array,
     Q,
@@ -7267,8 +7250,7 @@ module iq_sample_fifo_wr_bin_cntr
         .O(bin2gray[9]));
 endmodule
 
-(* ORIG_REF_NAME = "wr_logic" *) 
-module iq_sample_fifo_wr_logic
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_wr_logic
    (full,
     \DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram ,
     Q,
@@ -7316,7 +7298,7 @@ module iq_sample_fifo_wr_logic
   wire wr_en;
   wire [11:0]wr_pntr_plus2;
 
-  iq_sample_fifo_wr_status_flags_as \gwas.wsts 
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_wr_status_flags_as \gwas.wsts 
        (.D(wr_pntr_plus2),
         .\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram (\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram ),
         .\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_0 (\DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram_0 ),
@@ -7330,7 +7312,7 @@ module iq_sample_fifo_wr_logic
         .out(\gwas.wsts_n_1 ),
         .wr_clk(wr_clk),
         .wr_en(wr_en));
-  iq_sample_fifo_wr_bin_cntr wpntr
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_wr_bin_cntr wpntr
        (.D({D,wr_pntr_plus2}),
         .Q(Q),
         .bin2gray(bin2gray),
@@ -7342,8 +7324,7 @@ module iq_sample_fifo_wr_logic
         .wr_en(wr_en));
 endmodule
 
-(* ORIG_REF_NAME = "wr_status_flags_as" *) 
-module iq_sample_fifo_wr_status_flags_as
+module decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_wr_status_flags_as
    (full,
     out,
     \DEVICE_7SERIES.NO_BMM_INFO.SDP.SIMPLE_PRIM36.ram ,
@@ -7408,7 +7389,7 @@ module iq_sample_fifo_wr_status_flags_as
        (.I0(wr_en),
         .I1(ram_full_fb_i),
         .O(\gic0.gc0.count_d1_reg[12] ));
-  iq_sample_fifo_compare c1
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_compare c1
        (.RD_PNTR_WR(RD_PNTR_WR),
         .comp2(comp2),
         .\gic0.gc0.count_d1_reg[11] (\gic0.gc0.count_d1_reg[11] ),
@@ -7416,7 +7397,7 @@ module iq_sample_fifo_wr_status_flags_as
         .out(ram_full_fb_i),
         .ram_full_i_reg(c1_n_0),
         .wr_en(wr_en));
-  iq_sample_fifo_compare_0 c2
+  decalper_eb_ot_sdeen_pot_pi_dehcac_xnilix_compare_0 c2
        (.D(D),
         .RD_PNTR_WR(RD_PNTR_WR),
         .comp2(comp2),

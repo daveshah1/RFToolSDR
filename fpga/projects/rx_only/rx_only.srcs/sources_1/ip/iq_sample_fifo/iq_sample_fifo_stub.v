@@ -1,7 +1,7 @@
 // Copyright 1986-2016 Xilinx, Inc. All Rights Reserved.
 // --------------------------------------------------------------------------------
 // Tool Version: Vivado v.2016.3 (lin64) Build 1682563 Mon Oct 10 19:07:26 MDT 2016
-// Date        : Mon Dec 12 12:44:58 2016
+// Date        : Sat Apr 15 09:49:57 2017
 // Host        : david-desktop-arch running 64-bit unknown
 // Command     : write_verilog -force -mode synth_stub
 //               /home/dave/misc-projects/rftool-fpga/projects/rx_only/rx_only.srcs/sources_1/ip/iq_sample_fifo/iq_sample_fifo_stub.v
