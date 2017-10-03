@@ -15,6 +15,8 @@ extern "C" {
 
 using namespace std;
 
+enum class TxMode { TX_SINE, TX_NOISE };
+
 class RFThread {
 public:
   // Start and stop the AD9361 interfacing thread
@@ -26,10 +28,16 @@ public:
   void setGain(int rxgain);          // set rx rf gain in dB
   void setAgcEnable(bool agcEn);     // set AGC on or off
   void setInputPort(int port);       // set rx rf input port (0 or 1)
+  void setTxEnable(bool en);         // set tx on or off
+  void setTxMode(TxMode mode);       // set tx generator mode
+  void setTxOffset(int32_t offset);  // set tx generator offset
+  void setTxPower(int power);        // set tx output power
+
   // Copy the n most recent samples into a buffer (C style complex used for
   // compatibility reasons)
-  void getSamples(double _Complex *buf, int n);
-  //As above but only get new samples, returning the actual number of samples obtained
+  void getSamples(float _Complex *buf, int n);
+  // As above but only get new samples, returning the actual number of samples
+  // obtained
   int getRecentSamples(double _Complex *buf, int n);
 
   uint32_t getCurrentSampleRate();
@@ -51,6 +59,15 @@ private:
   atomic<int> inputPort{0};
   atomic<bool> inputPortChanged;
   atomic<bool> stopRF{false};
+
+  atomic<bool> transmitEnabled{false};
+  atomic<bool> txEnableChanged{false};
+  atomic<TxMode> transmitSigMode{TxMode::TX_SINE};
+  atomic<int32_t> transmitOffset{0};
+  atomic<bool> txGenConfigChanged{true};
+
+  atomic<int> txPower{-30};
+  atomic<bool> txPowerChanged{true};
 
   mutex sample_buf_mutex;
   static const size_t sample_buf_size = 33554432;

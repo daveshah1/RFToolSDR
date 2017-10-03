@@ -51,6 +51,12 @@ entity pc_control_handler is
     spi_start_xfer : out std_logic;
     spi_end_xfer : out std_logic;
     spi_done : in std_logic;
+
+    --Signal generator interface
+    siggen_address : out std_logic_vector(7 downto 0);
+    siggen_data : out std_logic_vector(31 downto 0);
+    siggen_wren : out std_logic;
+
     --Control outputs
     streaming_mode : out std_logic; --Asserted when in streaming mode
     control_signals : out std_logic_vector(7 downto 0) --General purpose control outputs
@@ -80,6 +86,9 @@ architecture Behavioral of pc_control_handler is
   --Leave streaming mode
   constant cmd_leave_stream_mode : cmd_t := x"31";
 
+  --Signal generator write: this does not produce as a response as it is often used within streaming mode
+  constant cmd_siggen_write : cmd_t := x"40";
+
   constant command_length : natural := 32;
   constant response_length : natural := 32;
 
@@ -101,6 +110,10 @@ architecture Behavioral of pc_control_handler is
   signal spi_resp_d : std_logic_vector(7 downto 0);
 
   signal spi_rden_last : std_logic := '0';
+
+  signal siggen_address_reg : std_logic_vector(7 downto 0);
+  signal siggen_data_reg : std_logic_vector(31 downto 0);
+  signal siggen_byte_count : natural range 0 to 5;
 begin
 
   --Main state machine
@@ -129,7 +142,7 @@ begin
 
           when 2 => --read command type
             current_command <= cmd_fifo_q;
-            if cmd_fifo_q = cmd_enter_stream_mode then --this command has no response
+            if cmd_fifo_q = cmd_enter_stream_mode or cmd_fifo_q = cmd_siggen_write then --this command has no response
               current_state <= 4;
             else
               current_state <= 3;
@@ -155,6 +168,10 @@ begin
               when cmd_set_ctrl_sig =>
                 control_signals_reg <= cmd_fifo_q;
                 current_state <= 13;
+              when cmd_siggen_write =>
+                siggen_address_reg <= cmd_fifo_q;
+                current_state <= 9;
+                siggen_byte_count <= 0;
               when others => --unknown/unsupported command: end without error for now
                 current_state <= 13;
             end case;
@@ -166,9 +183,19 @@ begin
               current_state <= 13;
             end if;
 
+          when 9 => --siggen write data xfer
+            if siggen_byte_count > 4 then
+              current_state <= 10;
+            else
+              siggen_data_reg <= cmd_fifo_q & siggen_data_reg(31 downto 8);
+              siggen_byte_count <= siggen_byte_count + 1;
+            end if;
+          when 10 => --siggen write out
+            current_state <= 13;
+
           when 13 => --end of command: read out any remaining payload bytes
             if command_bytes_read >= command_length then
-              if current_command = cmd_enter_stream_mode then
+              if current_command = cmd_enter_stream_mode or current_command = cmd_siggen_write then
                 current_state <= 0;
               else
                 current_state <= 14;
@@ -221,10 +248,11 @@ begin
   cmd_rden_int <= '1' when (current_state = 1) or (current_state = 4) or
                            ((current_state = 13) and (command_bytes_read < command_length)) or
                            ((current_state = 15) and (cmd_fifo_empty = '0')) or
-                           (((current_state = 6) or (current_state = 7)) and spi_cmd_rden_int = '1')
+                           (((current_state = 6) or (current_state = 7)) and spi_cmd_rden_int = '1') or
+                           (current_state = 9)
                             else '0';
 
-  resp_wren_int <= '1' when (current_state = 3) or ((current_command /= cmd_enter_stream_mode)
+  resp_wren_int <= '1' when (current_state = 3) or (((current_command /= cmd_enter_stream_mode) and (current_command /= cmd_siggen_write))
                             and ((current_state = 5) or ((current_state = 7) and (spi_resp_wren_int = '1'))
                             or ((current_state = 14) and (response_bytes_written < response_length)))) else '0';
 
@@ -267,6 +295,9 @@ begin
     end if;
   end process;
 
+  siggen_address <= siggen_address_reg;
+  siggen_data <= siggen_data_reg;
+  siggen_wren <= '1' when current_state = 10 else '0';
 
   streaming_mode <= streaming_mode_reg;
   control_signals <= control_signals_reg;

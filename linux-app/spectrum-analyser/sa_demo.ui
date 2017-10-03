@@ -181,9 +181,101 @@
       </row>
     </data>
   </object>
+  <object class="GtkListStore" id="demodModes">
+    <columns>
+      <!-- column-name label -->
+      <column type="gchararray"/>
+      <!-- column-name channel -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">Off</col>
+        <col id="1">OFF</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">AM</col>
+        <col id="1">AM</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">NFM</col>
+        <col id="1">NFM</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">WFM</col>
+        <col id="1">WFM</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">RAW</col>
+        <col id="1">RAW</col>
+      </row>
+    </data>
+  </object>
+
+  <object class="GtkListStore" id="txModeOptions">
+    <columns>
+      <!-- column-name label -->
+      <column type="gchararray"/>
+      <!-- column-name channel -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0" translatable="yes">CW</col>
+        <col id="1">sine</col>
+      </row>
+      <row>
+        <col id="0" translatable="yes">Noise</col>
+        <col id="1">noise</col>
+      </row>
+    </data>
+  </object>
+
   <object class="GtkAdjustment" id="rxOffset">
     <property name="lower">-56</property>
     <property name="upper">56</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="txOffset">
+    <property name="lower">-56</property>
+    <property name="upper">56</property>
+    <property name="step_increment">0.0001</property>
+    <property name="page_increment">0.1</property>
+  </object>
+  <object class="GtkAdjustment" id="txPower">
+    <property name="lower">-84</property>
+    <property name="upper">6</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">3</property>
+    <property name="value">-30</property>
+
+  </object>
+  <object class="GtkAdjustment" id="demodOffset">
+    <property name="lower">-56</property>
+    <property name="upper">56</property>
+    <property name="value">0</property>
+    <property name="step_increment">0.001</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="demodIFBW">
+    <property name="lower">0.1</property>
+    <property name="upper">250</property>
+    <property name="value">10</property>
+    <property name="step_increment">0.1</property>
+    <property name="page_increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="demodAFBW">
+    <property name="lower">0.1</property>
+    <property name="upper">20</property>
+    <property name="value">4</property>
+    <property name="step_increment">0.1</property>
+    <property name="page_increment">1</property>
+  </object>
+  <object class="GtkAdjustment" id="demodAFGain">
+    <property name="lower">-80</property>
+    <property name="upper">80</property>
+    <property name="value">-80</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
@@ -234,12 +326,49 @@
                 <property name="can_focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
-                  <object class="GtkLabel" id="cursorFreq">
+                  <object class="GtkToggleButton" id="txEnableButton">
+                    <property name="label" translatable="yes">Enable Transmit</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="margin_left">10</property>
+                    <property name="margin_right">10</property>
+                    <property name="margin_top">10</property>
+                    <property name="margin_bottom">10</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="margin_top">9</property>
-                    <property name="margin_bottom">10</property>
-                    <property name="label" translatable="yes">Cursor = ?MHz</property>
+                    <property name="label" translatable="yes">Tx Mode</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkComboBox" id="txModeSel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_left">10</property>
+                    <property name="margin_right">10</property>
+                    <property name="model">txModeOptions</property>
+                    <property name="active">0</property>
+                    <property name="id_column">0</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="tx_label"/>
+                      <attributes>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">False</property>
@@ -248,28 +377,75 @@
                   </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Tx Offset</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
+                  </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <object class="GtkSpinButton" id="txOffsetSpinner">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="margin_left">10</property>
+                    <property name="margin_right">10</property>
+                    <property name="adjustment">txOffset</property>
+                    <property name="digits">6</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
+
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Tx Power (dBm)</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">5</property>
+                  </packing>
                 </child>
                 <child>
-                  <placeholder/>
+                  <object class="GtkScale" id="txPowerSet">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="adjustment">txPower</property>
+                    <property name="fill_level">8</property>
+                    <property name="round_digits">1</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">6</property>
+                  </packing>
                 </child>
                 <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
+                  <object class="GtkButton" id="txMorseKey">
+                    <property name="label" translatable="yes">Morse Key</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="margin_left">10</property>
+                    <property name="margin_right">10</property>
+                    <property name="margin_top">10</property>
+                    <property name="margin_bottom">10</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">7</property>
+                  </packing>
                 </child>
               </object>
               <packing>
@@ -416,8 +592,19 @@
                           </packing>
                         </child>
                         <child>
-                          <placeholder/>
-                        </child>
+                          <object class="GtkLabel" id="cursorFreq">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="margin_top">9</property>
+                            <property name="margin_bottom">10</property>
+                            <property name="label" translatable="yes">Cursor = ?MHz</property>
+                          </object>
+                          <packing>
+                            <property name="expand">False</property>
+                            <property name="fill">True</property>
+                            <property name="position">6</property>
+                          </packing>
+                       </child>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -577,6 +764,23 @@
                   </packing>
                 </child>
                 <child>
+                  <object class="GtkCheckButton" id="fftPeakScale">
+                    <property name="label" translatable="yes">Use Peak Scaling</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="margin_left">10</property>
+                    <property name="margin_right">10</property>
+                    <property name="margin_top">5</property>
+                    <property name="draw_indicator">True</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
                   <object class="GtkLabel" id="rxResolution">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
@@ -587,12 +791,10 @@
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="position">2</property>
+                    <property name="position">3</property>
                   </packing>
                 </child>
-                <child>
-                  <placeholder/>
-                </child>
+
                 <child>
                   <object class="GtkLabel">
                     <property name="visible">True</property>
@@ -669,6 +871,160 @@
                 <property name="expand">True</property>
                 <property name="fill">True</property>
                 <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkBox">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Demod Offset (MHz)</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="demodOffsetSpinner">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="margin_left">10</property>
+                    <property name="margin_right">10</property>
+                    <property name="adjustment">demodOffset</property>
+                    <property name="digits">6</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Demodulation</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkComboBox" id="demodModeSel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_left">10</property>
+                    <property name="margin_right">10</property>
+                    <property name="model">demodModes</property>
+                    <property name="active">0</property>
+                    <property name="id_column">0</property>
+                    <child>
+                      <object class="GtkCellRendererText" id="demodLabelRenderer"/>
+                      <attributes>
+                        <attribute name="text">0</attribute>
+                      </attributes>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Demod Bandwidth (kHz)</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">4</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="demodIFBWSpinner">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="margin_left">10</property>
+                    <property name="margin_right">10</property>
+                    <property name="adjustment">demodIFBW</property>
+                    <property name="digits">1</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Audio Bandwidth (kHz)</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">6</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkSpinButton" id="demodAFBWSpinner">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="margin_left">10</property>
+                    <property name="margin_right">10</property>
+                    <property name="adjustment">demodAFBW</property>
+                    <property name="digits">1</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">7</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">Audio Gain (dB)</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">8</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkScale" id="audioGainSet">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="adjustment">demodAFGain</property>
+                    <property name="fill_level">80</property>
+                    <property name="round_digits">1</property>
+                    <property name="digits">0</property>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">9</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">3</property>
               </packing>
             </child>
           </object>

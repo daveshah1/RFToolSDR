@@ -30,7 +30,7 @@ extern bool rftool_get_agc_enabled(HRFTool dev);
 extern void rftool_set_input(HRFTool dev, int inp);
 extern int rftool_get_input(HRFTool dev);
 
-extern void rftool_get_samples(HRFTool dev, double _Complex *buf, int n);
+extern void rftool_get_samples(HRFTool dev, float _Complex *buf, int n);
 extern int rftool_get_new_samples(HRFTool dev, double _Complex *buf, int n);
 
 #ifdef __cplusplus

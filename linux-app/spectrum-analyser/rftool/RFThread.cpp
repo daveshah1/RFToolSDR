@@ -8,9 +8,9 @@ AD9361_InitParam default_init_param = {
     40000000UL, // reference_clk_rate
     /* Base Configuration */
     0, // two_rx_two_tx_mode_enable *** adi,2rx-2tx-mode-enable
-    0, // frequency_division_duplex_mode_enable ***
+    1, // frequency_division_duplex_mode_enable ***
        // adi,frequency-division-duplex-mode-enable
-    0, // frequency_division_duplex_independent_mode_enable ***
+    1, // frequency_division_duplex_independent_mode_enable ***
        // adi,frequency-division-duplex-independent-mode-enable
     1, // tdd_use_dual_synth_mode_enable *** adi,tdd-use-dual-synth-mode-enable
     0, // tdd_skip_vco_cal_enable *** adi,tdd-skip-vco-cal-enable
@@ -34,7 +34,7 @@ AD9361_InitParam default_init_param = {
     0,    // split_gain_table_mode_enable *** adi,split-gain-table-mode-enable
     40000000UL, // trx_synthesizer_target_fref_overwrite_hz ***
                 // adi,trx-synthesizer-target-fref-overwrite-hz
-    0, // qec_tracking_slow_mode_enable *** adi,qec-tracking-slow-mode-enable
+    1, // qec_tracking_slow_mode_enable *** adi,qec-tracking-slow-mode-enable
     /* ENSM Control */
     0, // ensm_enable_pin_pulse_mode_enable ***
        // adi,ensm-enable-pin-pulse-mode-enable
@@ -240,7 +240,7 @@ AD9361_InitParam default_init_param = {
     0,    // full_duplex_swap_bits_enable *** adi,full-duplex-swap-bits-enable
     0,    // delay_rx_data *** adi,delay-rx-data
     0,    // rx_data_clock_delay *** adi,rx-data-clock-delay
-    8,    // rx_data_delay *** adi,rx-data-delay
+    4,    // rx_data_delay *** adi,rx-data-delay
     7,    // tx_fb_clock_delay *** adi,tx-fb-clock-delay
     0,    // tx_data_delay *** adi,tx-data-delay
     75,   // lvds_bias_mV *** adi,lvds-bias-mV
@@ -352,6 +352,7 @@ void RFThread::thread_main() {
       centerFreqChanged = false;
       cout << "center freq == " << centerFreq << endl;
       ad9361_set_rx_lo_freq(ad9361_phy, centerFreq);
+      ad9361_set_tx_lo_freq(ad9361_phy, centerFreq);
       endSettingChange();
     }
     if (bandwidthChanged) {
@@ -359,13 +360,16 @@ void RFThread::thread_main() {
       bandwidthChanged = false;
       uint32_t targetSampleRate = getSampleRateFromBw(bandwidth);
       ad9361_set_rx_rf_bandwidth(ad9361_phy, bandwidth);
+      ad9361_set_tx_rf_bandwidth(ad9361_phy, bandwidth);
       ad9361_set_rx_sampling_freq(ad9361_phy, targetSampleRate);
+      ad9361_set_tx_sampling_freq(ad9361_phy, targetSampleRate);
       uint32_t actualSampleRate;
       ad9361_get_rx_sampling_freq(ad9361_phy, &actualSampleRate);
       cout << "actual sample rate = " << (actualSampleRate / 1.0e6) << "MSPS"
            << endl;
       currentSampleRate = actualSampleRate;
-
+      // tx sample rate also changes
+      txGenConfigChanged = true;
       endSettingChange();
     }
     if (gainChanged) {
@@ -390,6 +394,63 @@ void RFThread::thread_main() {
       ad9361_set_rx_rf_port_input(ad9361_phy, inputPort);
       endSettingChange();
     }
+
+    if (txEnableChanged) {
+      if (transmitEnabled) {
+        set_txrx_en(true, true);
+      } else {
+        set_txrx_en(false, true);
+      }
+      txGenConfigChanged = true;
+      txEnableChanged = false;
+    }
+
+    if (txGenConfigChanged) {
+      if (!transmitEnabled) {
+        // Zeros
+        siggen_config_write(0x00, 0x00);
+      } else if (transmitSigMode == TxMode::TX_SINE) {
+        uint64_t ddsFreq = (uint64_t(abs(transmitOffset)) * (1 << 24UL)) /
+                           getCurrentSampleRate();
+        if (ddsFreq >= (1 << 24UL))
+          ddsFreq = (1 << 24UL) - 1;
+        if (transmitOffset == 0) {
+          // DC
+          siggen_config_write(0x00, 0x03);
+          // Maximum amplitude
+          siggen_config_write(0x01, 0xFF << 24);
+        } else if (transmitOffset > 0) {
+          // Sine
+          siggen_config_write(0x00, 0x01);
+          // Maximum amplitude + set frequency
+          siggen_config_write(0x01, (0xFF << 24) | (ddsFreq & 0xFFFFFF));
+          // I = cosθ, Q = sinθ
+          // θQ = θI - 90
+          siggen_config_write(0x02, 3 * (4096 / 4));
+        } else {
+          // Sine
+          siggen_config_write(0x00, 0x01);
+          // Maximum amplitude + set frequency
+          siggen_config_write(0x01, (0xFF << 24) | (ddsFreq & 0xFFFFFF));
+          // I = cosθ, Q = -sinθ
+          // θQ = θI + 90
+          siggen_config_write(0x02, 1 * (4096 / 4));
+        }
+      } else if (transmitSigMode == TxMode::TX_NOISE) {
+        siggen_config_write(0x00, 0x02);
+      }
+      txGenConfigChanged = false;
+    };
+
+    if (txPowerChanged) {
+      int txAtten = (6 - txPower) * 1000;
+      if (txAtten > 89750)
+        txAtten = 89750;
+      beginSettingChange();
+      ad9361_set_tx_attenuation(ad9361_phy, 0, txAtten);
+      endSettingChange();
+      txPowerChanged = false;
+    }
     // do Rx
     // get up to 256k samples per iteration; but don't spend more than 20ms
     // doing so
@@ -405,8 +466,8 @@ void RFThread::thread_main() {
       for (auto ptr = temp_buf; ptr < temp_buf_ptr; ptr++) {
         sample_buf[sample_buf_idx] = *ptr;
         sample_buf_idx++;
-        if(sample_buf_read_offset < sample_buf_size)
-            sample_buf_read_offset++;
+        if (sample_buf_read_offset < sample_buf_size)
+          sample_buf_read_offset++;
         if (sample_buf_idx >= sample_buf_size) {
           long long us = chrono::duration_cast<chrono::microseconds>(
                              (chrono::high_resolution_clock::now() - last_wrap))
@@ -420,8 +481,7 @@ void RFThread::thread_main() {
     }
   }
   stopStreaming();
-  ad9361_set_en_state_machine_mode(ad9361_phy, ENSM_MODE_ALERT);
-  ad9361_set_en_state_machine_mode(ad9361_phy, ENSM_MODE_WAIT);
+  set_txrx_en(false, false);
 }
 
 void RFThread::init_device() {
@@ -440,34 +500,50 @@ void RFThread::init_device() {
   ad9361_set_tx_fir_config(ad9361_phy, tx_fir_config);
   ad9361_set_rx_fir_config(ad9361_phy, rx_fir_config);
   ad9361_set_trx_fir_en_dis(ad9361_phy, 0);
+  // ad9361_bist_loopback(ad9361_phy, 1);
 };
 
 void RFThread::startStreaming() {
-  ad9361_set_en_state_machine_mode(ad9361_phy, ENSM_MODE_ALERT);
-  ad9361_set_en_state_machine_mode(ad9361_phy, ENSM_MODE_RX);
+  set_txrx_en(false, false);
+  // ad9361_set_en_state_machine_mode(ad9361_phy, ENSM_MODE_ALERT);
+  // if (transmitEnabled) {
+  // ad9361_set_en_state_machine_mode(ad9361_phy, ENSM_MODE_FDD);
+  if (transmitEnabled) {
+    set_txrx_en(true, true);
+  } else {
+    set_txrx_en(false, true);
+  }
+  // } else {
+  //    //ad9361_set_en_state_machine_mode(ad9361_phy, ENSM_MODE_RX);
+  //  }
   enter_rx_streaming_mode();
 }
 
 void RFThread::stopStreaming() {
   iq_sample temp_buf[1024];
+
   leave_rx_streaming_mode();
+
   // Clear FTDI buffer
   while (rx_get_data(temp_buf))
     ;
 }
 
 void RFThread::beginSettingChange() {
-  /* ad9361_set_en_state_machine_mode(ad9361_phy, ENSM_MODE_ALERT);
-   ad9361_set_en_state_machine_mode(ad9361_phy, ENSM_MODE_WAIT);*/
+  // ad9361_set_en_state_machine_mode(ad9361_phy, ENSM_MODE_ALERT);
+  // ad9361_set_en_state_machine_mode(ad9361_phy, ENSM_MODE_WAIT);
   stopStreaming();
+  set_txrx_en(false, false);
 }
 
 void RFThread::endSettingChange() {
-  ad9361_set_en_state_machine_mode(ad9361_phy, ENSM_MODE_ALERT);
-  ad9361_set_en_state_machine_mode(ad9361_phy, ENSM_MODE_WAIT);
+  // ad9361_set_en_state_machine_mode(ad9361_phy, ENSM_MODE_ALERT);
+  // ad9361_set_en_state_machine_mode(ad9361_phy, ENSM_MODE_WAIT);
+  // set_txrx_en(false, false);
   ad9361_do_calib(ad9361_phy, RFDC_CAL, 0);
   ad9361_do_calib(ad9361_phy, RX_QUAD_CAL, 0);
   ad9361_do_calib(ad9361_phy, RX_BB_TUNE_CAL, 0);
+  ad9361_do_calib(ad9361_phy, TX_QUAD_CAL, 0);
   startStreaming();
 }
 
@@ -482,7 +558,7 @@ uint32_t RFThread::getSampleRateFromBw(uint32_t bw) {
 
 uint32_t RFThread::getCurrentSampleRate() { return currentSampleRate; };
 
-void RFThread::getSamples(double _Complex *buf, int n) {
+void RFThread::getSamples(float _Complex *buf, int n) {
   {
     lock_guard<mutex> guard(sample_buf_mutex);
     for (int i = 0; i < n; i++) {
@@ -495,22 +571,21 @@ void RFThread::getSamples(double _Complex *buf, int n) {
 }
 
 int RFThread::getRecentSamples(double _Complex *buf, int n) {
-    {
-      lock_guard<mutex> guard(sample_buf_mutex);
-      int available_samples = sample_buf_read_offset;
-      //cout << n << " " << available_samples << endl;
-      n = min(n, available_samples);
-      for (int i = 0; i < n; i++) {
-        int idx = (sample_buf_idx + i - sample_buf_read_offset) % sample_buf_size;
-        if (idx < 0)
-          idx += sample_buf_size;
-        buf[i] = sample_buf[idx].i + _Complex_I * sample_buf[idx].q;
-      }
-      sample_buf_read_offset -= n;
+  {
+    lock_guard<mutex> guard(sample_buf_mutex);
+    int available_samples = sample_buf_read_offset;
+    // cout << n << " " << available_samples << endl;
+    n = min(n, available_samples);
+    for (int i = 0; i < n; i++) {
+      int idx = (sample_buf_idx + i - sample_buf_read_offset) % sample_buf_size;
+      if (idx < 0)
+        idx += sample_buf_size;
+      buf[i] = sample_buf[idx].i + _Complex_I * sample_buf[idx].q;
     }
-    return n;
+    sample_buf_read_offset -= n;
+  }
+  return n;
 }
-
 
 void RFThread::setCenterFreq(uint64_t freq) {
   centerFreq = freq;
@@ -535,6 +610,27 @@ void RFThread::setAgcEnable(bool agcEn) {
 void RFThread::setInputPort(int port) {
   inputPort = port;
   inputPortChanged = true;
+}
+
+void RFThread::setTxEnable(bool en) {
+  transmitEnabled = en;
+  txEnableChanged = true;
+  txGenConfigChanged = true;
+}
+
+void RFThread::setTxMode(TxMode mode) {
+  transmitSigMode = mode;
+  txGenConfigChanged = true;
+}
+
+void RFThread::setTxOffset(int32_t offset) {
+  transmitOffset = offset;
+  txGenConfigChanged = true;
+}
+
+void RFThread::setTxPower(int power) {
+  txPower = power;
+  txPowerChanged = true;
 }
 
 uint64_t RFThread::getCenterFreq() { return centerFreq; }

@@ -42,7 +42,7 @@ bool USBInterface::exec_command(uint8_t *command, bool get_response,
   flush();
   FT_STATUS err;
   ULONG count;
-  if(debug_enable)
+  if (debug_enable)
     cout << "---------------------" << endl;
   print_command(command);
   err = FT_WritePipeEx(handle, 0, command, command_len, &count, timeout);
@@ -329,6 +329,9 @@ void USBInterface::turn_off_thread_safe() {
   conf.wStructSize = sizeof(FT_TRANSFER_CONF);
   conf.pipe[FT_PIPE_DIR_IN].fNonThreadSafeTransfer = true;
   conf.pipe[FT_PIPE_DIR_OUT].fNonThreadSafeTransfer = true;
+  conf.pipe[FT_PIPE_DIR_IN].dwURBBufferSize = 512UL * 1024UL;
+  conf.pipe[FT_PIPE_DIR_OUT].dwURBBufferSize = 512UL * 1024UL;
+
   for (DWORD i = 0; i < 4; i++)
     FT_SetTransferParams(&conf, i);
 }

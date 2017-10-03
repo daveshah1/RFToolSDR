@@ -1,0 +1,5 @@
+# compile verilog/system verilog design source files
+verilog xil_defaultlib  "ft60x_fifo_if_time_synth.v" --include "../../../../rx_only.srcs/sources_1/ip/sys_pll"
+
+# Do not sort compile order
+nosort

@@ -1,0 +1,6 @@
+# compile vhdl design source files
+vhdl xil_defaultlib  "ft60x_fifo_if_func_impl.vhd"
+vhdl xil_defaultlib  "../../../../../../pc/ft60x_fifo_if.vhd"
+
+# Do not sort compile order
+nosort

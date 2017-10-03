@@ -82,6 +82,10 @@ void gpio_set_value(unsigned gpio, int value) {
   }
 };
 
+void set_txrx_en(bool txrx, bool en) {
+  usb->set_fpga_ctrl((txrx << 3) | (en << 2));
+}
+
 void enter_rx_streaming_mode() {
   uint8_t cmd_buf[32], resp_buf[32];
   if (usb == nullptr)
@@ -99,6 +103,18 @@ void leave_rx_streaming_mode() {
   usb->exec_command(cmd_buf, true, resp_buf);
   usb->flush();
 };
+
+void siggen_config_write(uint8_t address, uint32_t data) {
+  uint8_t cmd_buf[32], resp_buf[32];
+  if (usb == nullptr)
+    return;
+  usb->build_command(0x40, vector<uint8_t>{address, uint8_t(data & 0xFF),
+                                           uint8_t((data >> 8) & 0xFF),
+                                           uint8_t((data >> 16) & 0xFF),
+                                           uint8_t((data >> 24) & 0xFF)},
+                     cmd_buf);
+  usb->exec_command(cmd_buf, false, resp_buf);
+}
 
 static const uint8_t rx_magic[4] = {0x52, 0x58, 0x49, 0x51};
 // static const uint8_t rx_magic[4] = {0x51, 0x49, 0x58, 0x52};
@@ -131,6 +147,8 @@ int rx_get_data(iq_sample *buf) {
       // Sign extend
       buf[out_idx].i = ((i_raw & 0x800) == 0x800) ? (i_raw | 0xF000) : i_raw;
       buf[out_idx].q = ((q_raw & 0x800) == 0x800) ? (q_raw | 0xF000) : q_raw;
+      // cout << buf[out_idx].i << "\t" << buf[out_idx].q << endl;
+
       out_idx++;
       i += 3;
     } else {

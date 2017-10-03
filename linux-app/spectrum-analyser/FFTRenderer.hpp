@@ -20,6 +20,8 @@ public:
   double maxAmplitude = -20;
   int viewHeight = 500;
 
+  bool peakScale = false;
+
   inline double GetStartFrequencyOff() const {
     return offset - (GetFrequencySpan() / 2);
   };
@@ -34,7 +36,7 @@ public:
   // dB
   // fftData must have 0Hz in the centre
   void FitFFTToView(double maxValue, double refLevel,
-                    const _Complex double *fftData, int fftLen,
+                    const _Complex float *fftData, int fftLen,
                     std::vector<double> &out);
 
   // Render FFT to the cairo context

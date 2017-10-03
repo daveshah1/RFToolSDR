@@ -46,13 +46,11 @@ void rftool_set_input(HRFTool dev, int inp) { dev->thrd.setInputPort(inp); }
 
 int rftool_get_input(HRFTool dev) { return dev->thrd.getInputPort(); }
 
-void rftool_get_samples(HRFTool dev, double _Complex *buf, int n) {
+void rftool_get_samples(HRFTool dev, float _Complex *buf, int n) {
   return dev->thrd.getSamples(buf, n);
 }
 
 extern int rftool_get_new_samples(HRFTool dev, double _Complex *buf, int n) {
-    return dev->thrd.getRecentSamples(buf, n);
+  return dev->thrd.getRecentSamples(buf, n);
 }
-
-
 }

@@ -8,6 +8,7 @@
  */
 
 #include "FFTRenderer.hpp"
+#include "dsp/DemodThread.hpp"
 #include "rftool/RFThread.hpp"
 #include <ccomplex>
 #include <iostream>
@@ -38,43 +39,52 @@ using namespace std;
 #define UI_FILE "sa_demo.ui"
 
 RFThread *rft;
+DemodThread *dmt;
 FFTRenderer *fftr;
 
 mutex fft_lock;
 vector<double> fft_points;
 Glib::RefPtr<Gtk::Adjustment> dispMaxAmp, dispMinAmp, rxDispZoom, rxOffset,
-    rxCenterFreq, rxInputGain;
-Gtk::ComboBox *fftLengthSel, *rxBwSel, *rxInputSel;
-Gtk::CheckButton *rxAgcEnable;
+    rxCenterFreq, rxInputGain, demodOffset, demodIFBW, demodAFBW, demodAFGain,
+    txOffset, txPower;
+Gtk::ComboBox *fftLengthSel, *rxBwSel, *rxInputSel, *demodModeSel, *txModeSel;
+Gtk::ToggleButton *txEnableButton;
+Gtk::CheckButton *rxAgcEnable, *fftPeakScale;
 Gtk::DrawingArea *fft_area, *waterfallArea;
 Gtk::SpinButton *rxCenterFreqSpinner;
-Gtk::Button *autoscaleAmp;
+Gtk::Button *autoscaleAmp, *txMorseKey;
 Gtk::Scale *rxGainSet;
 Gtk::Label *rxResolution, *cursorFreq;
 ulong last_fftLength = -1;
-fftw_plan fftplan = nullptr;
+fftwf_plan fftplan = nullptr;
 
 const size_t max_fftLength = 16777216;
-_Complex double *x_buf, *y_buf;
+_Complex float *x_buf, *y_buf;
 atomic<bool> draw_done{false};
 atomic<ulong> fftLength{524288};
-double *fft_window;
+float *fft_window;
 // Waterfall display points
 const int waterfall_wmax = 3840, waterfall_hmax = 2160;
 float waterfall_points[waterfall_hmax][waterfall_wmax] = {{0.0}};
 int waterfall_yptr = 0;
 
+int fft_count = 0;
+chrono::system_clock::time_point tmr;
+
 void update_fft() {
+  fft_count = 0;
+  tmr = chrono::system_clock::now();
   while (true) {
 
     rft->getSamples(x_buf, fftLength);
 
     if ((fftplan == nullptr) || (fftLength != last_fftLength)) {
-        //Build/rebuild window
-        const double a0 = 0.42, a1 = 0.5, a2 = 0.08, pi = 3.1415;
-        for(int ii = 0; ii < fftLength; ii++) {
-            fft_window[ii] = a0 - a1 * cos((2 * pi * ii) / (fftLength - 1)) + a2 * cos((4 * pi * ii) / (fftLength - 1));
-        }
+      // Build/rebuild window
+      const float a0 = 0.42, a1 = 0.5, a2 = 0.08, pi = 3.1415;
+      for (int ii = 0; ii < fftLength; ii++) {
+        fft_window[ii] = a0 - a1 * cos((2 * pi * ii) / (fftLength - 1)) +
+                         a2 * cos((4 * pi * ii) / (fftLength - 1));
+      }
     }
 
     for (int ii = 0; ii < fftLength; ii++) {
@@ -87,16 +97,27 @@ void update_fft() {
 
     if ((fftplan == nullptr) || (fftLength != last_fftLength)) {
       if (fftplan != nullptr)
-        fftw_destroy_plan(fftplan);
+        fftwf_destroy_plan(fftplan);
       fftplan =
-          fftw_plan_dft_1d(int(fftLength), x_buf, y_buf, -1, FFTW_ESTIMATE);
+          fftwf_plan_dft_1d(int(fftLength), x_buf, y_buf, -1, FFTW_ESTIMATE);
     }
     {
       lock_guard<mutex> fft_lock_acquire(fft_lock);
-      fftw_execute(fftplan);
+      fftwf_execute(fftplan);
     }
     last_fftLength = fftLength;
-    this_thread::sleep_for(chrono::milliseconds(10));
+    this_thread::sleep_for(chrono::milliseconds(2));
+    fft_count++;
+    if ((chrono::system_clock::now() - tmr) > chrono::seconds(2)) {
+      float speed =
+          fft_count / float(chrono::duration_cast<chrono::milliseconds>(
+                                chrono::system_clock::now() - tmr)
+                                .count());
+      speed *= 1000;
+      cout << "fft speed: " << speed << "/s" << endl;
+      fft_count = 0;
+      tmr = chrono::system_clock::now();
+    }
   }
 }
 
@@ -159,6 +180,58 @@ void autoscale_vert() {
   dispMaxAmp->set_value(ceil(maxamp + 20));
 }
 
+void demod_setting_changed() {
+  if (dmt != nullptr) {
+    // gchararray dmMode;
+    // demodModeSel->get_active()->get_value(1, dmMode);
+    dmt->demodMode = string(demodModeSel->get_active_id());
+    dmt->demodOffset = demodOffset->get_value() * 1e6;
+    dmt->ifBandwidth = demodIFBW->get_value() * 1e3;
+    dmt->afBandwidth = demodAFBW->get_value() * 1e3;
+    dmt->afGain = demodAFGain->get_value();
+  }
+};
+
+void tx_enable_changed() { rft->setTxEnable(txEnableButton->get_active()); }
+
+void morse_key_pressed() { rft->setTxEnable(true); }
+void morse_key_released() {
+  if (!txEnableButton->get_active())
+    rft->setTxEnable(false);
+}
+
+void tx_mode_changed() {
+  string mode = string(txModeSel->get_active_id());
+  if (mode == "CW") {
+    rft->setTxMode(TxMode::TX_SINE);
+  } else if (mode == "Noise") {
+    rft->setTxMode(TxMode::TX_NOISE);
+  }
+}
+
+void tx_offset_changed() {
+  rft->setTxOffset(int32_t(1e6 * txOffset->get_value()));
+}
+
+void tx_power_changed() { rft->setTxPower(int32_t(txPower->get_value())); }
+
+string to_string_prec(double val, int prec) {
+  stringstream s;
+  string suffix = "";
+  if (val >= 1e9) {
+    val /= 1e9;
+    suffix = "G";
+  } else if (val >= 1e6) {
+    val /= 1e6;
+    suffix = "M";
+  } else if (val >= 1e3) {
+    val /= 1e3;
+    suffix = "k";
+  }
+  s << setprecision(prec) << val << suffix;
+  return s.str();
+}
+
 bool on_fft_draw(const Cairo::RefPtr<Cairo::Context> &cr) {
   {
     lock_guard<mutex> fft_lock_acquire(fft_lock);
@@ -173,8 +246,12 @@ bool on_fft_draw(const Cairo::RefPtr<Cairo::Context> &cr) {
     fftr->offset = rxOffset->get_value() * 1e6;
     fftr->sampleRate = rft->getCurrentSampleRate();
     rxBwSel->get_active()->get_value(1, fftr->bandwidth);
+    fftr->peakScale = fftPeakScale->get_active();
     double resolution = double(fftr->sampleRate) / double(fftLength);
-    rxResolution->set_text("Resolution = " + to_string(resolution) + "Hz");
+    double disp_res =
+        double(fftr->bandwidth) / (double(fftr->viewWidth) * fftr->zoom);
+    rxResolution->set_text("Resolution = " + to_string_prec(resolution, 3) +
+                           "Hz (" + to_string_prec(disp_res, 3) + "Hz disp)");
     ulong fftLengthT;
     fftLengthSel->get_active()->get_value(1, fftLengthT);
     fftLength = fftLengthT;
@@ -233,14 +310,14 @@ bool on_wf_draw(const Cairo::RefPtr<Cairo::Context> &cr) {
 }
 
 int main(int argc, char *argv[]) {
-  #ifdef CUDA_FFT
-  x_buf = (_Complex double*)malloc(max_fftLength * sizeof(_Complex double));
-  y_buf = (_Complex double*)malloc(max_fftLength * sizeof(_Complex double));
-  #else
-  x_buf = fftw_alloc_complex(max_fftLength);
-  y_buf = fftw_alloc_complex(max_fftLength);
-  #endif
-  fft_window = new double[max_fftLength];
+#ifdef CUDA_FFT
+  x_buf = (_Complex float *)malloc(max_fftLength * sizeof(_Complex float));
+  y_buf = (_Complex float *)malloc(max_fftLength * sizeof(_Complex float));
+#else
+  x_buf = fftwf_alloc_complex(max_fftLength);
+  y_buf = fftwf_alloc_complex(max_fftLength);
+#endif
+  fft_window = new float[max_fftLength];
   fftr = new FFTRenderer();
 
   Gtk::Main kit(argc, argv);
@@ -271,6 +348,20 @@ int main(int argc, char *argv[]) {
   rxInputGain = Glib::RefPtr<Gtk::Adjustment>::cast_dynamic(
       builder->get_object("rxInputGain"));
 
+  demodOffset = Glib::RefPtr<Gtk::Adjustment>::cast_dynamic(
+      builder->get_object("demodOffset"));
+  demodIFBW = Glib::RefPtr<Gtk::Adjustment>::cast_dynamic(
+      builder->get_object("demodIFBW"));
+  demodAFBW = Glib::RefPtr<Gtk::Adjustment>::cast_dynamic(
+      builder->get_object("demodAFBW"));
+  demodAFGain = Glib::RefPtr<Gtk::Adjustment>::cast_dynamic(
+      builder->get_object("demodAFGain"));
+
+  txOffset = Glib::RefPtr<Gtk::Adjustment>::cast_dynamic(
+      builder->get_object("txOffset"));
+  txPower = Glib::RefPtr<Gtk::Adjustment>::cast_dynamic(
+      builder->get_object("txPower"));
+
   builder->get_widget("fftLengthSel", fftLengthSel);
   builder->get_widget("rxBwSel", rxBwSel);
   builder->get_widget("rxInputSel", rxInputSel);
@@ -280,10 +371,15 @@ int main(int argc, char *argv[]) {
   builder->get_widget("rxResolution", rxResolution);
   builder->get_widget("cursorFreq", cursorFreq);
   builder->get_widget("autoscaleAmp", autoscaleAmp);
+  builder->get_widget("fftPeakScale", fftPeakScale);
+  builder->get_widget("demodModeSel", demodModeSel);
+  builder->get_widget("txEnableButton", txEnableButton);
+  builder->get_widget("txModeSel", txModeSel);
+  builder->get_widget("txMorseKey", txMorseKey);
 
   if (main_win) {
     rft = new RFThread();
-
+    dmt = new DemodThread();
     fft_area->signal_draw().connect(sigc::ptr_fun(on_fft_draw));
     waterfallArea->signal_draw().connect(sigc::ptr_fun(on_wf_draw));
     main_win->set_events(Gdk::BUTTON_PRESS_MASK | Gdk::POINTER_MOTION_MASK);
@@ -299,11 +395,30 @@ int main(int argc, char *argv[]) {
     rxInputSel->signal_changed().connect(sigc::ptr_fun(inputSelChanged));
     rxBwSel->signal_changed().connect(sigc::ptr_fun(rxBandwidthChanged));
     rxAgcEnable->signal_toggled().connect(sigc::ptr_fun(rxAgcChanged));
+    demodModeSel->signal_changed().connect(
+        sigc::ptr_fun(demod_setting_changed));
+    demodOffset->signal_value_changed().connect(
+        sigc::ptr_fun(demod_setting_changed));
+    demodIFBW->signal_value_changed().connect(
+        sigc::ptr_fun(demod_setting_changed));
+    demodAFBW->signal_value_changed().connect(
+        sigc::ptr_fun(demod_setting_changed));
+    demodAFGain->signal_value_changed().connect(
+        sigc::ptr_fun(demod_setting_changed));
+    txOffset->signal_value_changed().connect(sigc::ptr_fun(tx_offset_changed));
+    txPower->signal_value_changed().connect(sigc::ptr_fun(tx_power_changed));
+    txEnableButton->signal_toggled().connect(sigc::ptr_fun(tx_enable_changed));
+    txModeSel->signal_changed().connect(sigc::ptr_fun(tx_mode_changed));
+    txMorseKey->signal_pressed().connect(sigc::ptr_fun(morse_key_pressed));
+    txMorseKey->signal_released().connect(sigc::ptr_fun(morse_key_released));
+
     autoscaleAmp->signal_clicked().connect(sigc::ptr_fun(autoscale_vert));
     rft->start();
     Glib::signal_timeout().connect(sigc::ptr_fun(redraw_fft), 17);
     thread uth(update_fft);
+    dmt->start(rft);
     kit.run(*main_win);
+    dmt->stop();
     rft->stop();
   }
   return 0;

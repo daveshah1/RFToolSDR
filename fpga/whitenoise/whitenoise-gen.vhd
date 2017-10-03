@@ -1,6 +1,7 @@
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
+use IEEE.MATH_REAL.ALL;
 
 --Parameterisable Gaussian White Noise Generator
 --Copyright (C) 2017 David Shah
@@ -30,8 +31,10 @@ architecture Behavioral of whitenoise_gen is
 
   signal lfsr_q : lfsr_value_t;
 
-  signal sum_d : std_logic_vector(int_width - 1 downto 0) := (others => '0');
-  signal sum_q : std_logic_vector(int_width - 1 downto 0);
+  constant sum_width : natural := natural(log2(real(num_lfsrs))) + int_width;
+
+  signal sum_d : std_logic_vector(sum_width - 1 downto 0) := (others => '0');
+  signal sum_q : std_logic_vector(sum_width - 1 downto 0);
 
 begin
 
@@ -49,7 +52,7 @@ begin
   end generate;
 
   process(lfsr_q)
-    variable sum : signed(int_width - 1 downto 0);
+    variable sum : signed(sum_width - 1 downto 0);
   begin
     sum := (others => '0');
     for i in 0 to num_lfsrs - 1 loop

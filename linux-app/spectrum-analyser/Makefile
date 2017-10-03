@@ -1,7 +1,7 @@
-src = $(wildcard ad9361/*.cpp rftool/*.cpp)
+src = $(wildcard ad9361/*.cpp rftool/*.cpp dsp/*.cpp)
 obj = $(src:.cpp=.o)
 
-csrc = $(wildcard ad9361/*.c rftool/*.c)
+csrc = $(wildcard ad9361/*.c rftool/*.c dsp/*.c)
 cobj = $(csrc:.c=.o)
 
 appsrc = main.cpp FFTRenderer.cpp
@@ -15,8 +15,8 @@ GTKLIBS = -lgtkmm-3.0 -latkmm-1.6 -lgdkmm-3.0 -lgiomm-2.4 -lpangomm-1.4 -lglibmm
 
 CFLAGS =  -fPIC -g  -m64 -I ad9361/platform -I rftool -I . $(GTKINC)
 CXXFLAGS = -fPIC -std=gnu++11 -g -O3 -m64 -I ad9361/platform -I rftool -I .  $(GTKINC)
-LDFLAGS = -L ftd3xx/ -lftd3xx $(GTKLIBS) -lfftw3 -lm -pthread -lrt -m64
-LIB_LDFLAGS = -L ftd3xx/ -lftd3xx -lfftw3 -lm -pthread -lrt -m64
+LDFLAGS = -L ftd3xx/ -lftd3xx $(GTKLIBS) -lfftw3 -lfftw3f -lasound -lm -pthread -lrt -m64
+LIB_LDFLAGS = -L ftd3xx/ -lftd3xx -lfftw3 -lfftw3f -lasound -lm -pthread -lrt -m64
 all: rftoolui librftool.so
 
 rftoolui: $(obj) $(cobj) $(appobj)

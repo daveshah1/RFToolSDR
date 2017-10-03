@@ -1,7 +1,7 @@
 #include "FFTRenderer.hpp"
 #include <iostream>
 void FFTRenderer::FitFFTToView(double maxValue, double refLevel,
-                               const _Complex double *fftData, int fftLen,
+                               const _Complex float *fftData, int fftLen,
                                std::vector<double> &out) {
   out.resize(viewWidth);
   double binWidth = sampleRate / fftLen;
@@ -12,6 +12,8 @@ void FFTRenderer::FitFFTToView(double maxValue, double refLevel,
   int binsPerPixel = (int)((HzPerPixel / binWidth) + 0.5);
   for (int i = 0; i < viewWidth; i++) {
     double peak = 0;
+    double avg = 0;
+    double value = 0;
     int startBin = (int)((currFreq / binWidth) + (fftLen / 2) + 0.5);
     for (int bin = startBin; bin <= (startBin + binsPerPixel); bin++) {
       if ((bin >= 0) && (bin < fftLen)) {
@@ -20,12 +22,15 @@ void FFTRenderer::FitFFTToView(double maxValue, double refLevel,
                        (double(fftLen) * double(fftLen));
         if (power > peak)
           peak = power;
+        avg += power;
       }
     }
-    if (peak == 0)
+    avg /= binsPerPixel;
+    value = peakScale ? peak : avg;
+    if (value == 0)
       out[i] = min_db;
     else
-      out[i] = refLevel + 10 * std::log10(peak / (maxValue * maxValue));
+      out[i] = refLevel + 10 * std::log10(value / (maxValue * maxValue));
     currFreq += HzPerPixel;
   };
 };

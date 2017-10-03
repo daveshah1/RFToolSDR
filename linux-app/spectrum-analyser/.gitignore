@@ -3,3 +3,4 @@ rftoolui
 ftd3xx/*
 !ftd3xx/PLACEHOLDER
 vgcore.*
+*.so
